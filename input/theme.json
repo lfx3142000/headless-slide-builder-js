@@ -1,0 +1,29 @@
+{
+  "themeName": "Executive Blue Designer",
+  "designerIntent": "Polished executive/consulting deck with strong hierarchy",
+  "colors": {
+    "primary": "1F4E79",
+    "secondary": "4F8FCF",
+    "accent": "F2B366",
+    "dark": "172033",
+    "light": "F6F8FB",
+    "muted": "667085",
+    "white": "FFFFFF",
+    "surface": "FFFFFF",
+    "surfaceAlt": "EEF3F8",
+    "border": "DDE6F0"
+  },
+  "fonts": {
+    "heading": "Aptos Display",
+    "body": "Aptos"
+  },
+  "style": {
+    "cornerRadius": 0.16,
+    "useFooter": true,
+    "footerText": "Headless Slide Builder Demo",
+    "titleScale": 1,
+    "bodyScale": 1,
+    "cardShadow": true,
+    "accentBar": true
+  }
+}
