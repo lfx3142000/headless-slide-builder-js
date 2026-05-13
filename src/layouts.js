@@ -1,4 +1,4 @@
-Try AI directly in your favorite apps … Use Gemini to generate drafts and refine content, plus get Gemini Pro with access to Google's next-gen AI
+
 const {
   SLIDE_W,
   SLIDE_H,
