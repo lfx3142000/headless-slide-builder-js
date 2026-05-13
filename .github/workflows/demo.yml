@@ -27,10 +27,9 @@ jobs:
       run: node demo.js
       
     - name: Build demo presentation
-      run: |
-        echo "Building demo presentation..."
-        node src/index.js --content input/content.json --theme input/theme.json --out output/demo_presentation.pptx || true
-        
+      run: |run: |
+        mkdir -p output
+        npm run build:demo
     - name: List output files
       run: |
         echo "Output directory contents:"
