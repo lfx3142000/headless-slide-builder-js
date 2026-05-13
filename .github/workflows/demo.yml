@@ -27,7 +27,7 @@ jobs:
       run: node demo.js
       
     - name: Build demo presentation
-      run: |run: |
+      run: |
         mkdir -p output
         npm run build:demo
     - name: List output files
