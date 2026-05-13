@@ -1,0 +1,41 @@
+{
+  "deckTitle": "AI Presentation Design Engine Demo v10",
+  "subtitle": "Headless JS slide builder with design tokens, brand support, image roles, quality reports, and visual self-review prompts",
+  "presenter": "Your Name",
+  "date": "2026-05-11",
+  "references": [
+    {
+      "label": "Project requirement",
+      "source": "User-provided slide builder instructions",
+      "note": "Headless JSON-driven PowerPoint generation"
+    }
+  ],
+  "slides": [
+    {
+      "type": "title",
+      "eyebrow": "Headless JS Slide Builder v10",
+      "title": "AI Presentation Design Engine",
+      "subtitle": "A reusable deck builder that combines content JSON, designer-theme JSON, design planning, and headless PowerPoint rendering."
+    },
+    {
+      "type": "content",
+      "title": "What this version adds",
+      "bullets": [
+        "Deck-wide design pass for visual rhythm and references",
+        "More layout variants and training-specific slide types",
+        "Regulatory tables and compliance matrices",
+        "Preview rendering and contact-sheet review workflow"
+      ]
+    },
+    {
+      "type": "content",
+      "title": "The system has four layers",
+      "bullets": [
+        "Content JSON: slide titles, bullets, tables, metrics",
+        "Theme JSON: colors, fonts, spacing, design tokens",
+        "Planner: adds variants and design metadata",
+        "Renderer: generates PowerPoint from planned deck"
+      ]
+    }
+  ]
+}
