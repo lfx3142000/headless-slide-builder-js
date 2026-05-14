@@ -7,11 +7,11 @@
   "scripts": {
     "build-deck": "node src/index.js",
     "validate": "node src/index.js --validate-only",
-    "build:demo": "node src/index.js --content input/content.json --theme input/theme.json --out output/generated_deck.pptx --plan-out output/planned_content.json --notes output/speaker_notes.md --image-catalog output/image_catalog.json --preview output/preview --contact-sheet output/contact_sheet.png",
+    "build:demo": "node src/index.js --content input/content.json --theme input/theme.json --out output/generated_deck.pptx --plan-out output/planned_content.json --notes output/speaker_notes.md --image-catalog output/image_catalog.json --preview output/preview --contact-sheet output/contact_sheet.pdf",
     "notes": "node src/index.js --validate-only --notes output/speaker_notes.md",
     "build:no-design": "node src/index.js --no-design",
     "image-catalog": "node src/index.js --validate-only --image-catalog output/image_catalog.json",
-    "preview": "node src/index.js --content input/content.json --theme input/theme.json --out output/generated_deck.pptx --preview output/preview --contact-sheet output/contact_sheet.png"
+    "preview": "node src/index.js --content input/content.json --theme input/theme.json --out output/generated_deck.pptx --preview output/preview --contact-sheet output/contact_sheet.pdf"
   },
   "keywords": [
     "powerpoint",
