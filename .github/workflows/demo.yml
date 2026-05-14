@@ -43,3 +43,13 @@ jobs:
         name: demo-presentation
         path: output/
         if-no-files-found: warn
+                
+    - name: Commit outputs to repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        mkdir -p demo-outputs
+        cp -r output/* demo-outputs/ || true
+        git add demo-outputs/ || true
+        git commit -m "Update demo outputs [skip ci]" || true
+        git push || true
