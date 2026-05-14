@@ -45,7 +45,7 @@ function writeDeckSummary(content, theme, outputPath, context = {}) {
     `- Brand logo: ${theme.brand?.logo || 'none'}`,
     '', '## Layout Sequence'
   ];
-  slides.forEach((s, i) => lines.push(`- ${i + 1}. ${s.type}${s.variant ? ` / ${s.variant}` : ''} — ${s.title || s.id || ''}`);
+  slides.forEach((s, i) => lines.push(`- ${i + 1}. ${s.type}${s.variant ? ` / ${s.variant}` : ''} — ${s.title || s.id || ''}`));
   lines.push('', '## Recommended Review Items');
   if (!score.issues.length) lines.push('- No major automated review issues detected.');
   score.issues.forEach(issue => lines.push(`- ${issue}`));
