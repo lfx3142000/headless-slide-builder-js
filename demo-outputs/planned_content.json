@@ -1,0 +1,150 @@
+{
+  "deckTitle": "AI Presentation Design Engine Demo v10",
+  "subtitle": "Headless JS slide builder with design tokens, brand support, image roles, quality reports, and visual self-review prompts",
+  "presenter": "Your Name",
+  "date": "2026-05-11",
+  "references": [
+    {
+      "label": "Project requirement",
+      "source": "User-provided slide builder instructions",
+      "note": "Headless JSON-driven PowerPoint generation",
+      "index": 1
+    }
+  ],
+  "slides": [
+    {
+      "type": "title",
+      "eyebrow": "Headless JS Slide Builder v10",
+      "title": "AI Presentation Design Engine",
+      "subtitle": "A reusable deck builder that combines content JSON, designer-theme JSON, design planning, and headless PowerPoint rendering.",
+      "id": "ai-presentation-design-engine",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "ai-presentation-design-engine",
+        "slideType": "title"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 1,
+        "deckPosition": "opening",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "executive_cover"
+    },
+    {
+      "type": "content",
+      "title": "What this version adds",
+      "bullets": [
+        "Deck-wide design pass for visual rhythm and references",
+        "More layout variants and training-specific slide types",
+        "Regulatory tables and compliance matrices",
+        "Preview rendering and contact-sheet review workflow"
+      ],
+      "id": "what-this-version-adds",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "what-this-version-adds",
+        "slideType": "content"
+      },
+      "design": {
+        "deckTypeVariantHint": "sidebar",
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 2,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "card_bullets"
+    },
+    {
+      "type": "content",
+      "title": "The system has four layers",
+      "bullets": [
+        "Content JSON: slide titles, bullets, tables, metrics",
+        "Theme JSON: colors, fonts, spacing, design tokens",
+        "Planner: adds variants and design metadata",
+        "Renderer: generates PowerPoint from planned deck"
+      ],
+      "id": "the-system-has-four-layers",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "the-system-has-four-layers",
+        "slideType": "content"
+      },
+      "design": {
+        "deckTypeVariantHint": "sidebar",
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 3,
+        "varietyHint": "avoid_repeating_previous_layout",
+        "visualIntervention": "card_layout_to_restore_visual_rhythm",
+        "deckPosition": "closing",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "card_bullets"
+    },
+    {
+      "type": "references",
+      "title": "References",
+      "eyebrow": "Sources",
+      "references": [
+        {
+          "label": "Project requirement",
+          "source": "User-provided slide builder instructions",
+          "note": "Headless JSON-driven PowerPoint generation",
+          "index": 1
+        }
+      ],
+      "speakerNotes": "Use this slide to acknowledge source material and technical references used in the deck.",
+      "design": {}
+    }
+  ],
+  "_revisionTracking": {
+    "generatedBy": "src/revisionTracker.js",
+    "slideIdsAssigned": 3
+  },
+  "deckType": "technical_explainer",
+  "_deckTypePlan": {
+    "deckType": "technical_explainer",
+    "noteMode": "technical",
+    "guidance": "Use clear definitions, examples, diagrams, and technical references.",
+    "encourages": [
+      "concept_explanation",
+      "worked_example",
+      "references"
+    ],
+    "generatedBy": "src/deckTypes.js",
+    "note": "Deck type influences variants and quality guidance only. It does not rewrite factual content."
+  },
+  "speakerNotesMode": "technical",
+  "_designProcessing": {
+    "enabled": true,
+    "mode": "safe",
+    "generatedBy": "src/designPlanner.js",
+    "note": "Deterministic planning only: no content rewriting, no slide splitting, no external AI calls."
+  },
+  "_deckDesignPlan": {
+    "enabled": true,
+    "generatedBy": "src/deckDesigner.js",
+    "note": "Deck-wide planning only: visual rhythm, layout variety flags, reference collection, no factual rewriting.",
+    "slideCount": 3,
+    "referenceCount": 1,
+    "visualRhythm": "alternate_text_visual_cards",
+    "dominantSlideTypes": {
+      "title": 1,
+      "content": 2
+    },
+    "recommendations": [],
+    "referenceSlideAdded": true
+  },
+  "_layoutFallbacks": {
+    "generatedBy": "src/layoutFallbacks.js",
+    "count": 0,
+    "events": []
+  },
+  "_tableFormatting": {
+    "generatedBy": "src/tableFormatter.js",
+    "tables": []
+  }
+}
