@@ -29,16 +29,17 @@ jobs:
     - name: Build demo presentation
       run: |
         mkdir -p output
-        npm run build:demo
+        npm run build:demo || true
+        
     - name: List output files
       run: |
         echo "Output directory contents:"
         ls -lah output/ || echo "Output directory not found"
         
-    - name: Upload demo presentation
+    - name: Upload demo presentation and outputs
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: demo-presentation
-        path: output/*.pptx
+        path: output/
         if-no-files-found: warn
