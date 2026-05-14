@@ -7,38 +7,43 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-
 permissions:
   contents: write
 jobs:
   build-demo:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libreoffice poppler-utils
+        pip3 install Pillow
+
     - name: Install dependencies
       run: npm install
-      
+
     - name: Run demo script
       run: node demo.js
-      
+
     - name: Build demo presentation
       run: |
         mkdir -p output
         npm run build:demo || true
-        
+
     - name: List output files
       run: |
         echo "Output directory contents:"
         ls -lah output/ || echo "Output directory not found"
-        
+
     - name: Upload demo presentation and outputs
       uses: actions/upload-artifact@v4
       if: always()
@@ -46,7 +51,7 @@ jobs:
         name: demo-presentation
         path: output/
         if-no-files-found: warn
-                
+
     - name: Commit outputs to repository
       run: |
         git config --local user.email "action@github.com"
