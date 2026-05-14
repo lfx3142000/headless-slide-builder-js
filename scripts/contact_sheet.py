@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """
-contact_sheet.py  --  Build a contact-sheet PNG from a folder of slide images.
+contact_sheet.py  --  Build a contact-sheet PDF from a folder of slide images.
 
 Usage:
     python3 scripts/contact_sheet.py <preview_dir> <output_path>
 
 Arguments:
     preview_dir   Directory containing slide PNG images (slide-1.png, slide-2.png, ...)
-    output_path   Path for the output contact sheet PNG
+    output_path   Path for the output contact sheet PDF
 """
 
 import sys
-import os
 import re
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
@@ -87,9 +86,9 @@ def build_contact_sheet(preview_dir: str, output_path: str):
         label = f'Slide {idx + 1}'
         draw.text((x + 6, label_y + 4), label, fill=LABEL_COLOR, font=font)
 
-    # Save output
+    # Save as PDF
     out.parent.mkdir(parents=True, exist_ok=True)
-    sheet.save(str(out), 'PNG', optimize=True)
+    sheet.save(str(out), 'PDF', resolution=150, save_all=False)
     print(f'Contact sheet saved to {out}  ({n} slides, {COLS} columns)')
 
 
