@@ -1,0 +1,58 @@
+{
+  "images": [
+    {
+      "id": "hero-workspace",
+      "path": "assets/images/test-hero.png",
+      "tags": ["hero", "workspace", "design", "professional", "cover"],
+      "description": "Wide clean studio workspace image suitable for title or full-bleed slides."
+    },
+    {
+      "id": "workspace",
+      "path": "assets/images/test-workspace.png",
+      "tags": ["workspace", "design", "desk", "planning", "creative"],
+      "description": "Neutral workspace and planning materials."
+    },
+    {
+      "id": "data-flow",
+      "path": "assets/images/test-data-flow.png",
+      "tags": ["data", "flow", "ai", "technology", "automation", "digital"],
+      "description": "Futuristic AI data flow and dashboard image."
+    },
+    {
+      "id": "meeting",
+      "path": "assets/images/test-meeting.png",
+      "tags": ["meeting", "executive", "presentation", "boardroom", "business"],
+      "description": "Professional boardroom meeting with presentation screens."
+    },
+    {
+      "id": "corporate-interior",
+      "path": "assets/images/corporate-interior.png",
+      "tags": ["corporate", "interior", "office", "professional", "section"],
+      "description": "Modern corporate office interior with abstract blue overlay."
+    },
+    {
+      "id": "studio-workspace",
+      "path": "assets/images/studio-workspace.png",
+      "tags": ["studio", "workspace", "creative", "design"],
+      "description": "Studio workspace environment."
+    },
+    {
+      "id": "meeting-room",
+      "path": "assets/images/meeting-room.png",
+      "tags": ["meeting", "room", "office", "collaboration"],
+      "description": "Modern meeting room setup."
+    },
+    {
+      "id": "data-flow-alt",
+      "path": "assets/images/data-flow.png",
+      "tags": ["data", "flow", "technology", "digital"],
+      "description": "Data flow visualization."
+    },
+    {
+      "id": "example",
+      "path": "assets/images/example.png",
+      "tags": ["example", "demo", "sample"],
+      "description": "Example placeholder image."
+    }
+  ]
+}
