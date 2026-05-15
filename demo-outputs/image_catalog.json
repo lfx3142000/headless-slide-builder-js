@@ -1,4 +1,176 @@
 {
-  "generatedAt": "2026-05-15T01:22:13.312Z",
-  "images": []
+  "generatedAt": "2026-05-15T03:29:31.236Z",
+  "images": [
+    {
+      "id": "corporate-interior",
+      "path": "assets/images/corporate-interior.png",
+      "fileName": "corporate-interior.png",
+      "baseName": "corporate-interior",
+      "tags": [
+        "corporate",
+        "interior",
+        "office",
+        "professional",
+        "section"
+      ],
+      "description": "Modern corporate office interior with abstract blue overlay.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "data-flow-alt",
+      "path": "assets/images/data-flow.png",
+      "fileName": "data-flow.png",
+      "baseName": "data-flow",
+      "tags": [
+        "data",
+        "flow",
+        "technology",
+        "digital"
+      ],
+      "description": "Data flow visualization.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "example",
+      "path": "assets/images/example.png",
+      "fileName": "example.png",
+      "baseName": "example",
+      "tags": [
+        "example",
+        "demo",
+        "sample"
+      ],
+      "description": "Example placeholder image.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "meeting-room",
+      "path": "assets/images/meeting-room.png",
+      "fileName": "meeting-room.png",
+      "baseName": "meeting-room",
+      "tags": [
+        "meeting",
+        "room",
+        "office",
+        "collaboration"
+      ],
+      "description": "Modern meeting room setup.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "studio-workspace",
+      "path": "assets/images/studio-workspace.png",
+      "fileName": "studio-workspace.png",
+      "baseName": "studio-workspace",
+      "tags": [
+        "studio",
+        "workspace",
+        "creative",
+        "design"
+      ],
+      "description": "Studio workspace environment.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "data-flow",
+      "path": "assets/images/test-data-flow.png",
+      "fileName": "test-data-flow.png",
+      "baseName": "test-data-flow",
+      "tags": [
+        "data",
+        "flow",
+        "ai",
+        "technology",
+        "automation",
+        "digital",
+        "test"
+      ],
+      "description": "Futuristic AI data flow and dashboard image.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "hero-workspace",
+      "path": "assets/images/test-hero.png",
+      "fileName": "test-hero.png",
+      "baseName": "test-hero",
+      "tags": [
+        "hero",
+        "workspace",
+        "design",
+        "professional",
+        "cover",
+        "test"
+      ],
+      "description": "Wide clean studio workspace image suitable for title or full-bleed slides.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "meeting",
+      "path": "assets/images/test-meeting.png",
+      "fileName": "test-meeting.png",
+      "baseName": "test-meeting",
+      "tags": [
+        "meeting",
+        "executive",
+        "presentation",
+        "boardroom",
+        "business",
+        "test"
+      ],
+      "description": "Professional boardroom meeting with presentation screens.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    },
+    {
+      "id": "workspace",
+      "path": "assets/images/test-workspace.png",
+      "fileName": "test-workspace.png",
+      "baseName": "test-workspace",
+      "tags": [
+        "workspace",
+        "design",
+        "desk",
+        "planning",
+        "creative",
+        "test"
+      ],
+      "description": "Neutral workspace and planning materials.",
+      "role": null,
+      "width": 1280,
+      "height": 720,
+      "aspectRatio": 1.7777777777777777,
+      "type": "jpg"
+    }
+  ]
 }
