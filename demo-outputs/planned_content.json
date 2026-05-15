@@ -1,26 +1,32 @@
 {
-  "deckTitle": "AI Presentation Design Engine Demo v10",
-  "subtitle": "Headless JS slide builder with design tokens, brand support, image roles, quality reports, and visual self-review prompts",
-  "presenter": "Your Name",
-  "date": "2026-05-11",
+  "deckTitle": "Headless Slide Builder — Full Feature Demo",
+  "subtitle": "Every layout type showcased in one comprehensive deck",
+  "presenter": "Demo User",
+  "date": "2026-05-14",
   "references": [
     {
-      "label": "Project requirement",
-      "source": "User-provided slide builder instructions",
-      "note": "Headless JSON-driven PowerPoint generation",
+      "label": "PptxGenJS",
+      "source": "https://gitbrent.github.io/PptxGenJS/",
+      "note": "Open-source Node.js PowerPoint library",
       "index": 1
+    },
+    {
+      "label": "Headless Builder",
+      "source": "github.com/lfx3142000/headless-slide-builder-js",
+      "note": "JSON-driven, AI-assisted deck generation",
+      "index": 2
     }
   ],
   "slides": [
     {
       "type": "title",
       "eyebrow": "Headless JS Slide Builder v10",
-      "title": "AI Presentation Design Engine",
-      "subtitle": "A reusable deck builder that combines content JSON, designer-theme JSON, design planning, and headless PowerPoint rendering.",
-      "id": "ai-presentation-design-engine",
+      "title": "Full Feature Demo",
+      "subtitle": "Showcasing every slide layout: titles, content, metrics, charts, timelines, tables, quotes, and more.",
+      "id": "full-feature-demo",
       "revision": {
         "trackedBy": "src/revisionTracker.js",
-        "stableId": "ai-presentation-design-engine",
+        "stableId": "full-feature-demo",
         "slideType": "title"
       },
       "design": {
@@ -33,43 +39,40 @@
       "variant": "executive_cover"
     },
     {
-      "type": "content",
-      "title": "What this version adds",
-      "bullets": [
-        "Deck-wide design pass for visual rhythm and references",
-        "More layout variants and training-specific slide types",
-        "Regulatory tables and compliance matrices",
-        "Preview rendering and contact-sheet review workflow"
-      ],
-      "id": "what-this-version-adds",
+      "type": "section",
+      "eyebrow": "Part 1",
+      "title": "Content & Bullet Layouts",
+      "subtitle": "Standard slides with text, bullets, and key messages",
+      "id": "content-bullet-layouts",
       "revision": {
         "trackedBy": "src/revisionTracker.js",
-        "stableId": "what-this-version-adds",
-        "slideType": "content"
+        "stableId": "content-bullet-layouts",
+        "slideType": "section"
       },
       "design": {
-        "deckTypeVariantHint": "sidebar",
-        "visualWeight": "balanced",
+        "visualWeight": "high",
         "fitStrategy": "standard",
         "slideIndex": 2,
         "deckPosition": "body",
         "deckVisualRhythm": "alternate_text_visual_cards"
       },
-      "variant": "card_bullets"
+      "variant": "bold"
     },
     {
       "type": "content",
-      "title": "The system has four layers",
+      "title": "Standard Bullet Slide",
+      "eyebrow": "Layout: content",
+      "body": "The default layout renders a clean card with an eyebrow, title, and bullet list.",
       "bullets": [
-        "Content JSON: slide titles, bullets, tables, metrics",
-        "Theme JSON: colors, fonts, spacing, design tokens",
-        "Planner: adds variants and design metadata",
-        "Renderer: generates PowerPoint from planned deck"
+        "Supports up to 6 bullets per card",
+        "Auto-sizes font to fit content",
+        "Theme colors applied to accent bar and typography",
+        "Speaker notes stored separately in Markdown"
       ],
-      "id": "the-system-has-four-layers",
+      "id": "standard-bullet-slide",
       "revision": {
         "trackedBy": "src/revisionTracker.js",
-        "stableId": "the-system-has-four-layers",
+        "stableId": "standard-bullet-slide",
         "slideType": "content"
       },
       "design": {
@@ -77,12 +80,649 @@
         "visualWeight": "balanced",
         "fitStrategy": "standard",
         "slideIndex": 3,
+        "visualIntervention": "card_layout_to_restore_visual_rhythm",
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "content",
+      "title": "Key Message Layout",
+      "eyebrow": "Layout: key_message",
+      "variant": "key_message",
+      "body": "A bold left-panel statement drives the point home.",
+      "bullets": [
+        "High-contrast primary color card on the left",
+        "Supporting evidence bullets on the right",
+        "Ideal for executive summaries and punchy insights"
+      ],
+      "id": "key-message-layout",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "key-message-layout",
+        "slideType": "content"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 4,
+        "varietyHint": "avoid_repeating_previous_layout",
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      }
+    },
+    {
+      "type": "content",
+      "title": "Numbered Insights",
+      "eyebrow": "Layout: numbered_insights",
+      "variant": "numbered_insights",
+      "bullets": [
+        "Design tokens drive every color and font decision",
+        "Brand guidelines encoded in theme.json",
+        "Content JSON separates data from presentation",
+        "AI planner assigns layout variants automatically",
+        "Quality report flags mismatches and missing data"
+      ],
+      "id": "numbered-insights",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "numbered-insights",
+        "slideType": "content"
+      },
+      "design": {
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 5,
+        "varietyHint": "avoid_repeating_previous_layout",
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      }
+    },
+    {
+      "type": "content",
+      "title": "Card Grid Layout",
+      "eyebrow": "Layout: cards",
+      "variant": "cards",
+      "bullets": [
+        "Each bullet becomes its own card",
+        "Up to 4 cards per row",
+        "Icon badge support per card",
+        "Automatic equal-width distribution"
+      ],
+      "id": "card-grid-layout",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "card-grid-layout",
+        "slideType": "content"
+      },
+      "design": {
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 6,
         "varietyHint": "avoid_repeating_previous_layout",
         "visualIntervention": "card_layout_to_restore_visual_rhythm",
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      }
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 2",
+      "title": "Two-Column & Comparison",
+      "subtitle": "Side-by-side layouts for structured comparison",
+      "id": "two-column-comparison",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "two-column-comparison",
+        "slideType": "section"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 7,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "bold"
+    },
+    {
+      "type": "two_column",
+      "title": "Two-Column Layout",
+      "eyebrow": "Layout: two_column",
+      "leftTitle": "Advantages",
+      "leftBullets": [
+        "Pure JSON input — no GUI needed",
+        "Version-controlled presentation source",
+        "CI/CD automated generation"
+      ],
+      "rightTitle": "Use Cases",
+      "rightBullets": [
+        "Sales decks from CRM data",
+        "Compliance reports from audit logs",
+        "Training materials from LMS exports"
+      ],
+      "id": "two-column-layout",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "two-column-layout",
+        "slideType": "two_column"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 8,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "comparison",
+      "title": "Headless Builder vs Manual Design",
+      "eyebrow": "Layout: comparison",
+      "leftTitle": "Headless Builder",
+      "leftBullets": [
+        "Minutes to generate a 20-slide deck",
+        "Consistent brand compliance",
+        "Zero design software required",
+        "Fully automatable via CI/CD"
+      ],
+      "rightTitle": "Manual Design",
+      "rightBullets": [
+        "Hours of manual slide work",
+        "Brand drift between authors",
+        "Requires PowerPoint or Keynote",
+        "Hard to automate at scale"
+      ],
+      "centerLabel": "vs",
+      "id": "headless-builder-vs-manual-design",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "headless-builder-vs-manual-design",
+        "slideType": "comparison"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 9,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "two_cards"
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 3",
+      "title": "Metrics & Data Slides",
+      "subtitle": "Numbers, charts, and risk visualization",
+      "id": "metrics-data-slides",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "metrics-data-slides",
+        "slideType": "section"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 10,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "bold"
+    },
+    {
+      "type": "big_number",
+      "title": "Key Performance Indicator",
+      "eyebrow": "Layout: big_number",
+      "value": "94%",
+      "label": "Automated Accuracy",
+      "body": "Slide content accuracy vs manually authored decks in A/B testing.",
+      "bullets": [
+        "Tested across 500 decks",
+        "Measured by design-token compliance",
+        "Brand guideline adherence scored"
+      ],
+      "id": "key-performance-indicator",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "key-performance-indicator",
+        "slideType": "big_number"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 11,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "metric_grid",
+      "title": "Platform at a Glance",
+      "eyebrow": "Layout: metric_grid",
+      "metrics": [
+        {
+          "value": "15+",
+          "label": "Layout Types",
+          "context": "Slide variants supported"
+        },
+        {
+          "value": "<2s",
+          "label": "Build Time",
+          "context": "Per slide generation"
+        },
+        {
+          "value": "100%",
+          "label": "JSON-Driven",
+          "context": "No GUI required"
+        },
+        {
+          "value": "MIT",
+          "label": "License",
+          "context": "Open source"
+        }
+      ],
+      "id": "platform-at-a-glance",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "platform-at-a-glance",
+        "slideType": "metric_grid"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 12,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "bar_chart",
+      "title": "Slide Types Usage Distribution",
+      "eyebrow": "Layout: bar_chart",
+      "body": "Distribution of layout types across a sample of 200 auto-generated decks.",
+      "data": [
+        {
+          "label": "Content",
+          "value": 38
+        },
+        {
+          "label": "Title",
+          "value": 12
+        },
+        {
+          "label": "Section",
+          "value": 18
+        },
+        {
+          "label": "Two-Col",
+          "value": 22
+        },
+        {
+          "label": "Metric",
+          "value": 28
+        },
+        {
+          "label": "Chart",
+          "value": 15
+        },
+        {
+          "label": "Table",
+          "value": 10
+        },
+        {
+          "label": "Quote",
+          "value": 8
+        }
+      ],
+      "bullets": [
+        "Content slides are most common",
+        "Metric and two-column layouts growing"
+      ],
+      "id": "slide-types-usage-distribution",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "slide-types-usage-distribution",
+        "slideType": "bar_chart"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 13,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "line_chart",
+      "title": "Decks Generated Per Month",
+      "eyebrow": "Layout: line_chart",
+      "data": [
+        {
+          "label": "Jan",
+          "value": 12
+        },
+        {
+          "label": "Feb",
+          "value": 19
+        },
+        {
+          "label": "Mar",
+          "value": 28
+        },
+        {
+          "label": "Apr",
+          "value": 35
+        },
+        {
+          "label": "May",
+          "value": 52
+        },
+        {
+          "label": "Jun",
+          "value": 61
+        },
+        {
+          "label": "Jul",
+          "value": 74
+        }
+      ],
+      "id": "decks-generated-per-month",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "decks-generated-per-month",
+        "slideType": "line_chart"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 14,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 4",
+      "title": "Process, Timeline & Tables",
+      "subtitle": "Structured data and workflow visualization",
+      "id": "process-timeline-tables",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "process-timeline-tables",
+        "slideType": "section"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 15,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "bold"
+    },
+    {
+      "type": "process",
+      "title": "How the Builder Works",
+      "eyebrow": "Layout: process",
+      "steps": [
+        "Author content.json with slide data and metadata",
+        "Define theme.json with brand colors, fonts, and design tokens",
+        "AI planner assigns layout variants and design decisions",
+        "Renderer builds PPTX slide-by-slide using pptxgenjs",
+        "Quality report and speaker notes exported automatically",
+        "LibreOffice renders preview PNGs and contact sheet PDF"
+      ],
+      "id": "how-the-builder-works",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "how-the-builder-works",
+        "slideType": "process"
+      },
+      "design": {
+        "deckTypeVariantHint": "horizontal_steps",
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 16,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "compact_steps"
+    },
+    {
+      "type": "timeline",
+      "title": "Project Roadmap",
+      "eyebrow": "Layout: timeline",
+      "items": [
+        {
+          "label": "Q1 2026",
+          "title": "Core engine + basic layouts"
+        },
+        {
+          "label": "Q2 2026",
+          "title": "Design tokens + brand support"
+        },
+        {
+          "label": "Q3 2026",
+          "title": "AI planner + quality reports"
+        },
+        {
+          "label": "Q4 2026",
+          "title": "Preview rendering + contact sheet"
+        },
+        {
+          "label": "Q1 2027",
+          "title": "SaaS API + multi-tenant support"
+        }
+      ],
+      "id": "project-roadmap",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "project-roadmap",
+        "slideType": "timeline"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 17,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "table",
+      "title": "Supported Slide Types Reference",
+      "eyebrow": "Layout: table",
+      "headers": [
+        "Type",
+        "Variant",
+        "Best For",
+        "Column Support"
+      ],
+      "rows": [
+        [
+          "title",
+          "hero / full_bleed",
+          "Opening slide",
+          "N/A"
+        ],
+        [
+          "section",
+          "light / dark",
+          "Section dividers",
+          "N/A"
+        ],
+        [
+          "content",
+          "standard / key_message / cards",
+          "Text + bullets",
+          "1"
+        ],
+        [
+          "two_column",
+          "standard",
+          "Side-by-side info",
+          "2"
+        ],
+        [
+          "comparison",
+          "two_cards / exec_tradeoff",
+          "A vs B decisions",
+          "2"
+        ],
+        [
+          "big_number",
+          "standard",
+          "KPI highlight",
+          "1+side"
+        ],
+        [
+          "metric_grid",
+          "standard",
+          "4-up KPIs",
+          "Up to 4"
+        ],
+        [
+          "bar_chart",
+          "standard",
+          "Category data",
+          "1+side"
+        ],
+        [
+          "line_chart",
+          "standard",
+          "Trend data",
+          "1"
+        ],
+        [
+          "process",
+          "standard",
+          "Step-by-step flows",
+          "1"
+        ],
+        [
+          "timeline",
+          "standard",
+          "Roadmaps",
+          "1"
+        ],
+        [
+          "table",
+          "standard",
+          "Structured data",
+          "N"
+        ],
+        [
+          "quote",
+          "standard",
+          "Testimonials",
+          "1"
+        ],
+        [
+          "closing",
+          "standard",
+          "Next steps / CTA",
+          "Up to 4"
+        ]
+      ],
+      "id": "supported-slide-types-reference",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "supported-slide-types-reference",
+        "slideType": "table"
+      },
+      "design": {
+        "deckTypeVariantHint": "status",
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 18,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard",
+      "_tableFormat": {
+        "colCount": 4,
+        "rowCount": 14,
+        "longestCell": 30,
+        "maxVisibleRows": 10,
+        "rowH": 0.4318181818181818,
+        "fontSize": 7.1,
+        "headerFontSize": 6.8999999999999995,
+        "emphasizeFirstColumn": true,
+        "alternateRows": true,
+        "warning": "4 rows not displayed by this slide layout."
+      }
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 5",
+      "title": "Quotes & Closing",
+      "subtitle": "Testimonial and call-to-action slides",
+      "id": "quotes-closing",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "quotes-closing",
+        "slideType": "section"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 19,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "bold"
+    },
+    {
+      "type": "quote",
+      "eyebrow": "Layout: quote",
+      "quote": "The best presentation is one where the content drives the design — not the other way around.",
+      "attribution": "Headless Builder Design Principle",
+      "id": "quote-20",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "quote-20",
+        "slideType": "quote"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 20,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "closing",
+      "eyebrow": "Next Steps",
+      "title": "Get Started Today",
+      "bullets": [
+        "Clone the repo and run npm install",
+        "Edit input/content.json with your content",
+        "Run npm run build:demo to generate your deck",
+        "Review contact_sheet.pdf for a quick visual check"
+      ],
+      "id": "get-started-today",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "get-started-today",
+        "slideType": "closing"
+      },
+      "design": {
+        "visualWeight": "balanced",
+        "fitStrategy": "standard",
+        "slideIndex": 21,
         "deckPosition": "closing",
         "deckVisualRhythm": "alternate_text_visual_cards"
       },
-      "variant": "card_bullets"
+      "variant": "executive_next_steps"
     },
     {
       "type": "references",
@@ -90,10 +730,16 @@
       "eyebrow": "Sources",
       "references": [
         {
-          "label": "Project requirement",
-          "source": "User-provided slide builder instructions",
-          "note": "Headless JSON-driven PowerPoint generation",
+          "label": "PptxGenJS",
+          "source": "https://gitbrent.github.io/PptxGenJS/",
+          "note": "Open-source Node.js PowerPoint library",
           "index": 1
+        },
+        {
+          "label": "Headless Builder",
+          "source": "github.com/lfx3142000/headless-slide-builder-js",
+          "note": "JSON-driven, AI-assisted deck generation",
+          "index": 2
         }
       ],
       "speakerNotes": "Use this slide to acknowledge source material and technical references used in the deck.",
@@ -102,22 +748,22 @@
   ],
   "_revisionTracking": {
     "generatedBy": "src/revisionTracker.js",
-    "slideIdsAssigned": 3
+    "slideIdsAssigned": 21
   },
-  "deckType": "technical_explainer",
+  "deckType": "project_status",
   "_deckTypePlan": {
-    "deckType": "technical_explainer",
-    "noteMode": "technical",
-    "guidance": "Use clear definitions, examples, diagrams, and technical references.",
+    "deckType": "project_status",
+    "noteMode": "status",
+    "guidance": "Show progress, blockers, risks, owners, and next milestones.",
     "encourages": [
-      "concept_explanation",
-      "worked_example",
-      "references"
+      "metric_grid",
+      "timeline",
+      "risk_matrix"
     ],
     "generatedBy": "src/deckTypes.js",
     "note": "Deck type influences variants and quality guidance only. It does not rewrite factual content."
   },
-  "speakerNotesMode": "technical",
+  "speakerNotesMode": "status",
   "_designProcessing": {
     "enabled": true,
     "mode": "safe",
@@ -128,12 +774,24 @@
     "enabled": true,
     "generatedBy": "src/deckDesigner.js",
     "note": "Deck-wide planning only: visual rhythm, layout variety flags, reference collection, no factual rewriting.",
-    "slideCount": 3,
-    "referenceCount": 1,
+    "slideCount": 21,
+    "referenceCount": 2,
     "visualRhythm": "alternate_text_visual_cards",
     "dominantSlideTypes": {
       "title": 1,
-      "content": 2
+      "section": 5,
+      "content": 4,
+      "two_column": 1,
+      "comparison": 1,
+      "big_number": 1,
+      "metric_grid": 1,
+      "bar_chart": 1,
+      "line_chart": 1,
+      "process": 1,
+      "timeline": 1,
+      "table": 1,
+      "quote": 1,
+      "closing": 1
     },
     "recommendations": [],
     "referenceSlideAdded": true
@@ -145,6 +803,21 @@
   },
   "_tableFormatting": {
     "generatedBy": "src/tableFormatter.js",
-    "tables": []
+    "tables": [
+      {
+        "slideNumber": 18,
+        "title": "Supported Slide Types Reference",
+        "colCount": 4,
+        "rowCount": 14,
+        "longestCell": 30,
+        "maxVisibleRows": 10,
+        "rowH": 0.4318181818181818,
+        "fontSize": 7.1,
+        "headerFontSize": 6.8999999999999995,
+        "emphasizeFirstColumn": true,
+        "alternateRows": true,
+        "warning": "4 rows not displayed by this slide layout."
+      }
+    ]
   }
 }

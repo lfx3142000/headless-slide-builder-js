@@ -1,26 +1,41 @@
 # Slide Builder Quality Report
 
-Deck: AI Presentation Design Engine Demo v10
+Deck: Headless Slide Builder — Full Feature Demo
 Theme: Executive Blue Designer
-Deck type: technical_explainer
-Slides: 4
-Quality score: 88/100
+Deck type: project_status
+Slides: 22
+Quality score: 90/100
 Design tokens: {"titleSlideMood":"premium","cardDensity":"airy","sectionDividerEnergy":"bold","imageStyle":"editorial","chartStyle":"minimal","tableStyle":"regulatory_clean","footerStyle":"thin_rule","cornerStyle":"soft","iconStyle":"badge","visualReviewMode":"contact_sheet"}
 
 ## Layout Mix
 - title: 1
-- content: 2
+- section: 5
+- content: 4
+- two_column: 1
+- comparison: 1
+- big_number: 1
+- metric_grid: 1
+- bar_chart: 1
+- line_chart: 1
+- process: 1
+- timeline: 1
+- table: 1
+- quote: 1
+- closing: 1
 - references: 1
 
 ## Checks
-- Slides missing speaker notes: 3
+- Slides missing speaker notes: 21
 - Image layout slides missing assets: 0
 - Layout fallback events: 0
-- Table formatting entries: 0
+- Table formatting entries: 1
 
 ## Deck-Type Guidance
-Use clear definitions, examples, diagrams, and technical references.
-Encouraged slide types: concept_explanation, worked_example, references
+Show progress, blockers, risks, owners, and next milestones.
+Encouraged slide types: metric_grid, timeline, risk_matrix
+
+## Table Auto-Formatting
+- Slide 18: 14 rows, 4 columns, font 7.1pt — 4 rows not displayed by this slide layout.
 
 ## Visual Self-Review Workflow
 - Open the generated contact sheet or slide PNGs.
@@ -28,11 +43,29 @@ Encouraged slide types: concept_explanation, worked_example, references
 - Prefer edits to layout variants, image roles, theme tokens, and speaker notes before changing factual content.
 
 ## Issues and Recommendations
-- 3 slides are missing speaker notes.
-- Deck does not include a closing or summary checklist slide.
+- Slide 18 (Supported Slide Types Reference): table has more than 8 rows; extra rows may not render in the current layout.
+- 21 slides are missing speaker notes.
 
 ## Slide IDs
-- 1. ai-presentation-design-engine — AI Presentation Design Engine
-- 2. what-this-version-adds — What this version adds
-- 3. the-system-has-four-layers — The system has four layers
-- 4. (no id) — References
+- 1. full-feature-demo — Full Feature Demo
+- 2. content-bullet-layouts — Content & Bullet Layouts
+- 3. standard-bullet-slide — Standard Bullet Slide
+- 4. key-message-layout — Key Message Layout
+- 5. numbered-insights — Numbered Insights
+- 6. card-grid-layout — Card Grid Layout
+- 7. two-column-comparison — Two-Column & Comparison
+- 8. two-column-layout — Two-Column Layout
+- 9. headless-builder-vs-manual-design — Headless Builder vs Manual Design
+- 10. metrics-data-slides — Metrics & Data Slides
+- 11. key-performance-indicator — Key Performance Indicator
+- 12. platform-at-a-glance — Platform at a Glance
+- 13. slide-types-usage-distribution — Slide Types Usage Distribution
+- 14. decks-generated-per-month — Decks Generated Per Month
+- 15. process-timeline-tables — Process, Timeline & Tables
+- 16. how-the-builder-works — How the Builder Works
+- 17. project-roadmap — Project Roadmap
+- 18. supported-slide-types-reference — Supported Slide Types Reference
+- 19. quotes-closing — Quotes & Closing
+- 20. quote-20 — quote
+- 21. get-started-today — Get Started Today
+- 22. (no id) — References

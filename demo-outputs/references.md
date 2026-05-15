@@ -1,5 +1,6 @@
 # References
 
-Deck: AI Presentation Design Engine Demo v10
+Deck: Headless Slide Builder — Full Feature Demo
 
-1. Project requirement — User-provided slide builder instructions — Headless JSON-driven PowerPoint generation
+1. PptxGenJS — https://gitbrent.github.io/PptxGenJS/ — Open-source Node.js PowerPoint library
+2. Headless Builder — github.com/lfx3142000/headless-slide-builder-js — JSON-driven, AI-assisted deck generation
