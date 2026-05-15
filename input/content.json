@@ -251,6 +251,54 @@
         "Run npm run build:demo to generate your deck",
         "Review contact_sheet.pdf for a quick visual check"
       ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 6",
+      "title": "Image Layouts",
+      "subtitle": "Slides with photos and visual content"
+    },
+    {
+      "type": "image_left",
+      "eyebrow": "Layout: image_left",
+      "title": "Image Left Layout",
+      "image": "assets/images/test-meeting.png",
+      "body": "Place an image on the left half with text content on the right.",
+      "bullets": [
+        "Ideal for product screenshots or diagrams",
+        "Text block floats right of the image",
+        "Caption and attribution supported"
+      ]
+    },
+    {
+      "type": "image_right",
+      "eyebrow": "Layout: image_right",
+      "title": "Image Right Layout",
+      "image": "assets/images/test-workspace.png",
+      "body": "Text content on the left with a supporting image on the right.",
+      "bullets": [
+        "Great for team photos or context visuals",
+        "Maintains brand accent bar on left edge",
+        "Auto-crops to fill right panel"
+      ]
+    },
+    {
+      "type": "full_bleed_image",
+      "eyebrow": "Layout: full_bleed",
+      "title": "Full Bleed Image",
+      "image": "assets/images/test-hero.png",
+      "subtitle": "A full-slide background image with a dark overlay and centered text."
+    },
+    {
+      "type": "image_grid",
+      "eyebrow": "Layout: image_grid",
+      "title": "Image Grid",
+      "images": [
+        { "path": "assets/images/test-hero.png", "caption": "Hero Workspace" },
+        { "path": "assets/images/test-meeting.png", "caption": "Boardroom Meeting" },
+        { "path": "assets/images/test-workspace.png", "caption": "Studio Desk" },
+        { "path": "assets/images/test-data-flow.png", "caption": "Data Flow" }
+      ]
     }
   ]
 }
