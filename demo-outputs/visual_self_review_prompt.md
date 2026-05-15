@@ -50,7 +50,12 @@ Design tokens: {
 19. section/bold: Quotes & Closing
 20. quote/standard: (untitled)
 21. closing/executive_next_steps: Get Started Today
-22. references: References
+22. section/bold: Image Layouts
+23. image_left/magazine: Image Left Layout
+24. image_right/magazine: Image Right Layout
+25. full_bleed_image/standard: Full Bleed Image
+26. image_grid/standard: Image Grid
+27. references: References
 
 ## Required Output
 

@@ -3,13 +3,13 @@
 Deck: Headless Slide Builder — Full Feature Demo
 Theme: Executive Blue Designer
 Deck type: project_status
-Slides: 22
+Slides: 27
 Quality score: 90/100
 Design tokens: {"titleSlideMood":"premium","cardDensity":"airy","sectionDividerEnergy":"bold","imageStyle":"editorial","chartStyle":"minimal","tableStyle":"regulatory_clean","footerStyle":"thin_rule","cornerStyle":"soft","iconStyle":"badge","visualReviewMode":"contact_sheet"}
 
 ## Layout Mix
 - title: 1
-- section: 5
+- section: 6
 - content: 4
 - two_column: 1
 - comparison: 1
@@ -22,10 +22,14 @@ Design tokens: {"titleSlideMood":"premium","cardDensity":"airy","sectionDividerE
 - table: 1
 - quote: 1
 - closing: 1
+- image_left: 1
+- image_right: 1
+- full_bleed_image: 1
+- image_grid: 1
 - references: 1
 
 ## Checks
-- Slides missing speaker notes: 21
+- Slides missing speaker notes: 26
 - Image layout slides missing assets: 0
 - Layout fallback events: 0
 - Table formatting entries: 1
@@ -44,7 +48,7 @@ Encouraged slide types: metric_grid, timeline, risk_matrix
 
 ## Issues and Recommendations
 - Slide 18 (Supported Slide Types Reference): table has more than 8 rows; extra rows may not render in the current layout.
-- 21 slides are missing speaker notes.
+- 26 slides are missing speaker notes.
 
 ## Slide IDs
 - 1. full-feature-demo — Full Feature Demo
@@ -68,4 +72,9 @@ Encouraged slide types: metric_grid, timeline, risk_matrix
 - 19. quotes-closing — Quotes & Closing
 - 20. quote-20 — quote
 - 21. get-started-today — Get Started Today
-- 22. (no id) — References
+- 22. image-layouts — Image Layouts
+- 23. image-left-layout — Image Left Layout
+- 24. image-right-layout — Image Right Layout
+- 25. full-bleed-image — Full Bleed Image
+- 26. image-grid — Image Grid
+- 27. (no id) — References

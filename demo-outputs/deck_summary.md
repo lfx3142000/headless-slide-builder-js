@@ -5,7 +5,7 @@ Subtitle: Every layout type showcased in one comprehensive deck
 Audience / deck type: project_status
 Theme: Executive Blue Designer
 Designer intent: Polished executive/consulting deck with strong hierarchy
-Slides: 22
+Slides: 27
 Quality score: 90/100
 
 ## Design System
@@ -37,8 +37,13 @@ Quality score: 90/100
 - 19. section / bold — Quotes & Closing
 - 20. quote / standard — quote-20
 - 21. closing / executive_next_steps — Get Started Today
-- 22. references — References
+- 22. section / bold — Image Layouts
+- 23. image_left / magazine — Image Left Layout
+- 24. image_right / magazine — Image Right Layout
+- 25. full_bleed_image / standard — Full Bleed Image
+- 26. image_grid / standard — Image Grid
+- 27. references — References
 
 ## Recommended Review Items
 - Slide 18 (Supported Slide Types Reference): table has more than 8 rows; extra rows may not render in the current layout.
-- 21 slides are missing speaker notes.
+- 26 slides are missing speaker notes.

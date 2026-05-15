@@ -87,6 +87,26 @@ _No speaker notes provided._
 
 _No speaker notes provided._
 
-## Slide 22: References
+## Slide 22: Image Layouts
+
+_No speaker notes provided._
+
+## Slide 23: Image Left Layout
+
+_No speaker notes provided._
+
+## Slide 24: Image Right Layout
+
+_No speaker notes provided._
+
+## Slide 25: Full Bleed Image
+
+_No speaker notes provided._
+
+## Slide 26: Image Grid
+
+_No speaker notes provided._
+
+## Slide 27: References
 
 Use this slide to acknowledge source material and technical references used in the deck.

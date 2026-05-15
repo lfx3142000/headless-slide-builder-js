@@ -719,10 +719,210 @@
         "visualWeight": "balanced",
         "fitStrategy": "standard",
         "slideIndex": 21,
-        "deckPosition": "closing",
+        "deckPosition": "body",
         "deckVisualRhythm": "alternate_text_visual_cards"
       },
       "variant": "executive_next_steps"
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 6",
+      "title": "Image Layouts",
+      "subtitle": "Slides with photos and visual content",
+      "id": "image-layouts",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "image-layouts",
+        "slideType": "section"
+      },
+      "design": {
+        "visualWeight": "high",
+        "fitStrategy": "standard",
+        "slideIndex": 22,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "bold"
+    },
+    {
+      "type": "image_left",
+      "eyebrow": "Layout: image_left",
+      "title": "Image Left Layout",
+      "image": {
+        "path": "assets/images/test-meeting.png",
+        "meta": {
+          "width": 1280,
+          "height": 720,
+          "aspectRatio": 1.7777777777777777,
+          "type": "jpg"
+        }
+      },
+      "body": "Place an image on the left half with text content on the right.",
+      "bullets": [
+        "Ideal for product screenshots or diagrams",
+        "Text block floats right of the image",
+        "Caption and attribution supported"
+      ],
+      "id": "image-left-layout",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "image-left-layout",
+        "slideType": "image_left"
+      },
+      "design": {
+        "visualWeight": "visual",
+        "fitStrategy": "standard",
+        "slideIndex": 23,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "imageMeta": {
+        "width": 1280,
+        "height": 720,
+        "aspectRatio": 1.7777777777777777,
+        "matchType": "explicit-path"
+      },
+      "variant": "magazine"
+    },
+    {
+      "type": "image_right",
+      "eyebrow": "Layout: image_right",
+      "title": "Image Right Layout",
+      "image": {
+        "path": "assets/images/test-workspace.png",
+        "meta": {
+          "width": 1280,
+          "height": 720,
+          "aspectRatio": 1.7777777777777777,
+          "type": "jpg"
+        }
+      },
+      "body": "Text content on the left with a supporting image on the right.",
+      "bullets": [
+        "Great for team photos or context visuals",
+        "Maintains brand accent bar on left edge",
+        "Auto-crops to fill right panel"
+      ],
+      "id": "image-right-layout",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "image-right-layout",
+        "slideType": "image_right"
+      },
+      "design": {
+        "visualWeight": "visual",
+        "fitStrategy": "standard",
+        "slideIndex": 24,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "imageMeta": {
+        "width": 1280,
+        "height": 720,
+        "aspectRatio": 1.7777777777777777,
+        "matchType": "explicit-path"
+      },
+      "variant": "magazine"
+    },
+    {
+      "type": "full_bleed_image",
+      "eyebrow": "Layout: full_bleed",
+      "title": "Full Bleed Image",
+      "image": {
+        "path": "assets/images/test-hero.png",
+        "meta": {
+          "width": 1280,
+          "height": 720,
+          "aspectRatio": 1.7777777777777777,
+          "type": "jpg"
+        }
+      },
+      "subtitle": "A full-slide background image with a dark overlay and centered text.",
+      "id": "full-bleed-image",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "full-bleed-image",
+        "slideType": "full_bleed_image"
+      },
+      "design": {
+        "visualWeight": "visual",
+        "fitStrategy": "standard",
+        "slideIndex": 25,
+        "deckPosition": "body",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "imageMeta": {
+        "width": 1280,
+        "height": 720,
+        "aspectRatio": 1.7777777777777777,
+        "matchType": "explicit-path"
+      },
+      "variant": "standard"
+    },
+    {
+      "type": "image_grid",
+      "eyebrow": "Layout: image_grid",
+      "title": "Image Grid",
+      "images": [
+        {
+          "path": "assets/images/test-hero.png",
+          "meta": {
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.7777777777777777,
+            "type": "jpg",
+            "role": null
+          },
+          "matchType": "explicit-path"
+        },
+        {
+          "path": "assets/images/test-meeting.png",
+          "meta": {
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.7777777777777777,
+            "type": "jpg",
+            "role": null
+          },
+          "matchType": "explicit-path"
+        },
+        {
+          "path": "assets/images/test-workspace.png",
+          "meta": {
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.7777777777777777,
+            "type": "jpg",
+            "role": null
+          },
+          "matchType": "explicit-path"
+        },
+        {
+          "path": "assets/images/test-data-flow.png",
+          "meta": {
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.7777777777777777,
+            "type": "jpg",
+            "role": null
+          },
+          "matchType": "explicit-path"
+        }
+      ],
+      "id": "image-grid",
+      "revision": {
+        "trackedBy": "src/revisionTracker.js",
+        "stableId": "image-grid",
+        "slideType": "image_grid"
+      },
+      "design": {
+        "visualWeight": "visual",
+        "fitStrategy": "standard",
+        "slideIndex": 26,
+        "deckPosition": "closing",
+        "deckVisualRhythm": "alternate_text_visual_cards"
+      },
+      "variant": "standard"
     },
     {
       "type": "references",
@@ -748,7 +948,7 @@
   ],
   "_revisionTracking": {
     "generatedBy": "src/revisionTracker.js",
-    "slideIdsAssigned": 21
+    "slideIdsAssigned": 26
   },
   "deckType": "project_status",
   "_deckTypePlan": {
@@ -774,12 +974,12 @@
     "enabled": true,
     "generatedBy": "src/deckDesigner.js",
     "note": "Deck-wide planning only: visual rhythm, layout variety flags, reference collection, no factual rewriting.",
-    "slideCount": 21,
+    "slideCount": 26,
     "referenceCount": 2,
     "visualRhythm": "alternate_text_visual_cards",
     "dominantSlideTypes": {
       "title": 1,
-      "section": 5,
+      "section": 6,
       "content": 4,
       "two_column": 1,
       "comparison": 1,
@@ -791,7 +991,11 @@
       "timeline": 1,
       "table": 1,
       "quote": 1,
-      "closing": 1
+      "closing": 1,
+      "image_left": 1,
+      "image_right": 1,
+      "full_bleed_image": 1,
+      "image_grid": 1
     },
     "recommendations": [],
     "referenceSlideAdded": true
