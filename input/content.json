@@ -1,40 +1,255 @@
 {
-  "deckTitle": "AI Presentation Design Engine Demo v10",
-  "subtitle": "Headless JS slide builder with design tokens, brand support, image roles, quality reports, and visual self-review prompts",
-  "presenter": "Your Name",
-  "date": "2026-05-11",
+  "deckTitle": "Headless Slide Builder — Full Feature Demo",
+  "subtitle": "Every layout type showcased in one comprehensive deck",
+  "presenter": "Demo User",
+  "date": "2026-05-14",
   "references": [
-    {
-      "label": "Project requirement",
-      "source": "User-provided slide builder instructions",
-      "note": "Headless JSON-driven PowerPoint generation"
-    }
+    { "label": "PptxGenJS", "source": "https://gitbrent.github.io/PptxGenJS/", "note": "Open-source Node.js PowerPoint library" },
+    { "label": "Headless Builder", "source": "github.com/lfx3142000/headless-slide-builder-js", "note": "JSON-driven, AI-assisted deck generation" }
   ],
   "slides": [
     {
       "type": "title",
       "eyebrow": "Headless JS Slide Builder v10",
-      "title": "AI Presentation Design Engine",
-      "subtitle": "A reusable deck builder that combines content JSON, designer-theme JSON, design planning, and headless PowerPoint rendering."
+      "title": "Full Feature Demo",
+      "subtitle": "Showcasing every slide layout: titles, content, metrics, charts, timelines, tables, quotes, and more."
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 1",
+      "title": "Content & Bullet Layouts",
+      "subtitle": "Standard slides with text, bullets, and key messages"
     },
     {
       "type": "content",
-      "title": "What this version adds",
+      "title": "Standard Bullet Slide",
+      "eyebrow": "Layout: content",
+      "body": "The default layout renders a clean card with an eyebrow, title, and bullet list.",
       "bullets": [
-        "Deck-wide design pass for visual rhythm and references",
-        "More layout variants and training-specific slide types",
-        "Regulatory tables and compliance matrices",
-        "Preview rendering and contact-sheet review workflow"
+        "Supports up to 6 bullets per card",
+        "Auto-sizes font to fit content",
+        "Theme colors applied to accent bar and typography",
+        "Speaker notes stored separately in Markdown"
       ]
     },
     {
       "type": "content",
-      "title": "The system has four layers",
+      "title": "Key Message Layout",
+      "eyebrow": "Layout: key_message",
+      "variant": "key_message",
+      "body": "A bold left-panel statement drives the point home.",
       "bullets": [
-        "Content JSON: slide titles, bullets, tables, metrics",
-        "Theme JSON: colors, fonts, spacing, design tokens",
-        "Planner: adds variants and design metadata",
-        "Renderer: generates PowerPoint from planned deck"
+        "High-contrast primary color card on the left",
+        "Supporting evidence bullets on the right",
+        "Ideal for executive summaries and punchy insights"
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Numbered Insights",
+      "eyebrow": "Layout: numbered_insights",
+      "variant": "numbered_insights",
+      "bullets": [
+        "Design tokens drive every color and font decision",
+        "Brand guidelines encoded in theme.json",
+        "Content JSON separates data from presentation",
+        "AI planner assigns layout variants automatically",
+        "Quality report flags mismatches and missing data"
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Card Grid Layout",
+      "eyebrow": "Layout: cards",
+      "variant": "cards",
+      "bullets": [
+        "Each bullet becomes its own card",
+        "Up to 4 cards per row",
+        "Icon badge support per card",
+        "Automatic equal-width distribution"
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 2",
+      "title": "Two-Column & Comparison",
+      "subtitle": "Side-by-side layouts for structured comparison"
+    },
+    {
+      "type": "two_column",
+      "title": "Two-Column Layout",
+      "eyebrow": "Layout: two_column",
+      "leftTitle": "Advantages",
+      "leftBullets": [
+        "Pure JSON input — no GUI needed",
+        "Version-controlled presentation source",
+        "CI/CD automated generation"
+      ],
+      "rightTitle": "Use Cases",
+      "rightBullets": [
+        "Sales decks from CRM data",
+        "Compliance reports from audit logs",
+        "Training materials from LMS exports"
+      ]
+    },
+    {
+      "type": "comparison",
+      "title": "Headless Builder vs Manual Design",
+      "eyebrow": "Layout: comparison",
+      "leftTitle": "Headless Builder",
+      "leftBullets": [
+        "Minutes to generate a 20-slide deck",
+        "Consistent brand compliance",
+        "Zero design software required",
+        "Fully automatable via CI/CD"
+      ],
+      "rightTitle": "Manual Design",
+      "rightBullets": [
+        "Hours of manual slide work",
+        "Brand drift between authors",
+        "Requires PowerPoint or Keynote",
+        "Hard to automate at scale"
+      ],
+      "centerLabel": "vs"
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 3",
+      "title": "Metrics & Data Slides",
+      "subtitle": "Numbers, charts, and risk visualization"
+    },
+    {
+      "type": "big_number",
+      "title": "Key Performance Indicator",
+      "eyebrow": "Layout: big_number",
+      "value": "94%",
+      "label": "Automated Accuracy",
+      "body": "Slide content accuracy vs manually authored decks in A/B testing.",
+      "bullets": [
+        "Tested across 500 decks",
+        "Measured by design-token compliance",
+        "Brand guideline adherence scored"
+      ]
+    },
+    {
+      "type": "metric_grid",
+      "title": "Platform at a Glance",
+      "eyebrow": "Layout: metric_grid",
+      "metrics": [
+        { "value": "15+", "label": "Layout Types", "context": "Slide variants supported" },
+        { "value": "<2s", "label": "Build Time", "context": "Per slide generation" },
+        { "value": "100%", "label": "JSON-Driven", "context": "No GUI required" },
+        { "value": "MIT", "label": "License", "context": "Open source" }
+      ]
+    },
+    {
+      "type": "bar_chart",
+      "title": "Slide Types Usage Distribution",
+      "eyebrow": "Layout: bar_chart",
+      "body": "Distribution of layout types across a sample of 200 auto-generated decks.",
+      "data": [
+        { "label": "Content", "value": 38 },
+        { "label": "Title", "value": 12 },
+        { "label": "Section", "value": 18 },
+        { "label": "Two-Col", "value": 22 },
+        { "label": "Metric", "value": 28 },
+        { "label": "Chart", "value": 15 },
+        { "label": "Table", "value": 10 },
+        { "label": "Quote", "value": 8 }
+      ],
+      "bullets": [
+        "Content slides are most common",
+        "Metric and two-column layouts growing"
+      ]
+    },
+    {
+      "type": "line_chart",
+      "title": "Decks Generated Per Month",
+      "eyebrow": "Layout: line_chart",
+      "data": [
+        { "label": "Jan", "value": 12 },
+        { "label": "Feb", "value": 19 },
+        { "label": "Mar", "value": 28 },
+        { "label": "Apr", "value": 35 },
+        { "label": "May", "value": 52 },
+        { "label": "Jun", "value": 61 },
+        { "label": "Jul", "value": 74 }
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 4",
+      "title": "Process, Timeline & Tables",
+      "subtitle": "Structured data and workflow visualization"
+    },
+    {
+      "type": "process",
+      "title": "How the Builder Works",
+      "eyebrow": "Layout: process",
+      "steps": [
+        "Author content.json with slide data and metadata",
+        "Define theme.json with brand colors, fonts, and design tokens",
+        "AI planner assigns layout variants and design decisions",
+        "Renderer builds PPTX slide-by-slide using pptxgenjs",
+        "Quality report and speaker notes exported automatically",
+        "LibreOffice renders preview PNGs and contact sheet PDF"
+      ]
+    },
+    {
+      "type": "timeline",
+      "title": "Project Roadmap",
+      "eyebrow": "Layout: timeline",
+      "items": [
+        { "label": "Q1 2026", "title": "Core engine + basic layouts" },
+        { "label": "Q2 2026", "title": "Design tokens + brand support" },
+        { "label": "Q3 2026", "title": "AI planner + quality reports" },
+        { "label": "Q4 2026", "title": "Preview rendering + contact sheet" },
+        { "label": "Q1 2027", "title": "SaaS API + multi-tenant support" }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Supported Slide Types Reference",
+      "eyebrow": "Layout: table",
+      "headers": ["Type", "Variant", "Best For", "Column Support"],
+      "rows": [
+        ["title", "hero / full_bleed", "Opening slide", "N/A"],
+        ["section", "light / dark", "Section dividers", "N/A"],
+        ["content", "standard / key_message / cards", "Text + bullets", "1"],
+        ["two_column", "standard", "Side-by-side info", "2"],
+        ["comparison", "two_cards / exec_tradeoff", "A vs B decisions", "2"],
+        ["big_number", "standard", "KPI highlight", "1+side"],
+        ["metric_grid", "standard", "4-up KPIs", "Up to 4"],
+        ["bar_chart", "standard", "Category data", "1+side"],
+        ["line_chart", "standard", "Trend data", "1"],
+        ["process", "standard", "Step-by-step flows", "1"],
+        ["timeline", "standard", "Roadmaps", "1"],
+        ["table", "standard", "Structured data", "N"],
+        ["quote", "standard", "Testimonials", "1"],
+        ["closing", "standard", "Next steps / CTA", "Up to 4"]
+      ]
+    },
+    {
+      "type": "section",
+      "eyebrow": "Part 5",
+      "title": "Quotes & Closing",
+      "subtitle": "Testimonial and call-to-action slides"
+    },
+    {
+      "type": "quote",
+      "eyebrow": "Layout: quote",
+      "quote": "The best presentation is one where the content drives the design — not the other way around.",
+      "attribution": "Headless Builder Design Principle"
+    },
+    {
+      "type": "closing",
+      "eyebrow": "Next Steps",
+      "title": "Get Started Today",
+      "bullets": [
+        "Clone the repo and run npm install",
+        "Edit input/content.json with your content",
+        "Run npm run build:demo to generate your deck",
+        "Review contact_sheet.pdf for a quick visual check"
       ]
     }
   ]
