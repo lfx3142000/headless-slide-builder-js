@@ -9,55 +9,66 @@ on:
 
 permissions:
   contents: write
+
 jobs:
   build-demo:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y libreoffice poppler-utils
-        pip3 install Pillow
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libreoffice poppler-utils
+          pip3 install Pillow
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run demo script
-      run: node demo.js
+      - name: Download sample images
+        run: |
+          mkdir -p assets/images
+          curl -sL "https://picsum.photos/seed/hero/1280/720" -o assets/images/test-hero.png
+          curl -sL "https://picsum.photos/seed/workspace/1280/720" -o assets/images/test-workspace.png
+          curl -sL "https://picsum.photos/seed/dataflow/1280/720" -o assets/images/test-data-flow.png
+          curl -sL "https://picsum.photos/seed/meeting/1280/720" -o assets/images/test-meeting.png
+          curl -sL "https://picsum.photos/seed/corporate/1280/720" -o assets/images/corporate-interior.png
+          curl -sL "https://picsum.photos/seed/studio/1280/720" -o assets/images/studio-workspace.png
+          curl -sL "https://picsum.photos/seed/example/1280/720" -o assets/images/example.png
+          curl -sL "https://picsum.photos/seed/flow/1280/720" -o assets/images/data-flow.png
+          curl -sL "https://picsum.photos/seed/room/1280/720" -o assets/images/meeting-room.png
+          echo "Images downloaded:"
+          ls -la assets/images/
 
-    - name: Build demo presentation
-      run: |
-        mkdir -p output
-        npm run build:demo || true
+      - name: Run demo script
+        run: node demo.js
 
-    - name: List output files
-      run: |
-        echo "Output directory contents:"
-        ls -lah output/ || echo "Output directory not found"
+      - name: Build demo presentation
+        run: |
+          mkdir -p output
+          npm run build:demo
 
-    - name: Upload demo presentation and outputs
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: demo-presentation
-        path: output/
-        if-no-files-found: warn
+      - name: List output files
+        run: ls output/
 
-    - name: Commit outputs to repository
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        mkdir -p demo-outputs
-        cp -r output/* demo-outputs/ || true
-        git add demo-outputs/ || true
-        git commit -m "Update demo outputs [skip ci]" || true
-        git push || true
+      - name: Upload demo presentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-presentation
+          path: output/
+
+      - name: Commit outputs to repository
+        run: |
+          git config user.name "actions-user"
+          git config user.email "actions@github.com"
+          cp -r output/* demo-outputs/ 2>/dev/null || true
+          git add demo-outputs/
+          git diff --staged --quiet || git commit -m "Update demo outputs [skip ci]"
+          git push
