@@ -1,92 +1,102 @@
-# headless-slide-builder-js
-Headless AI-assisted PowerPoint slide builder using Node.js and pptxgenjs
+# Headless Slide Builder (JS)
 
-## Overview
+Headless PowerPoint generation with Node.js and PptxGenJS. The builder takes structured content and a theme, then produces a `.pptx` deck plus planning and quality artifacts.
 
-This is a headless PowerPoint presentation builder that uses Node.js and pptxgenjs to generate professional slide decks programmatically. It supports multiple layout types, themes, and design systems.
+## Current Status
 
-## Features
+The core builder is working. On 2026-06-23, the full-feature demo built successfully as a 27-slide PowerPoint deck with planned-content, speaker-notes, quality, reference, and visual-review reports.
 
-- 🎨 **Multiple Layout Types**: Title, content, two-column, image slides, charts, and more
-- 🎭 **Theme Support**: Customizable colors, fonts, and styling
-- 📊 **Data Visualization**: Built-in chart and metric layouts
-- 🔧 **Modular Design**: Clean separation of layouts, themes, and content
-- ✅ **Quality Checking**: Built-in validation and quality reporting
+The current focus is code-only reliability: deck-specific input packaging, strict asset validation, predictable preview/contact-sheet generation, and test coverage. AI APIs are not part of the current implementation scope; content drafting and visual review may be done manually with an AI tool outside the codebase.
 
-## Installation
+## What It Does
+
+- Generates title, section, content, comparison, metric, chart, process, timeline, table, image, quote, closing, and reference slides.
+- Applies theme colors, fonts, layout variants, and deck-level visual rhythm.
+- Validates content and theme JSON, reports fit warnings, and exports planned content.
+- Exports speaker notes, quality, reference, deck-summary, and visual-review reports.
+- Renders slide PNGs and a one-page contact sheet when LibreOffice, Poppler, and Pillow are available.
+
+## Requirements
+
+- Node.js 18 or later
+- npm
+- Optional preview tooling: LibreOffice (`soffice`), Poppler (`pdftoppm`), and Python with Pillow
+
+## Install
 
 ```bash
 npm install
 ```
 
-## Quick Start - Run the Demo
-
-### Option 1: Run the demo script
+## Build the Full Demo
 
 ```bash
-node demo.js
+npm run build:demo
 ```
 
-### Option 2: Build a presentation using npm scripts
+The full demo reads `input/content.json` and `input/theme.json` and writes artifacts to `output/`, including:
+
+- `generated_deck.pptx`
+- `planned_content.json`
+- `speaker_notes.md`
+- `quality_report.md`
+- `deck_summary.md`
+- `references.md`
+- `visual_self_review_prompt.md`
+- `preview/` and `contact_sheet.pdf` when preview dependencies are available
+
+`node demo.js` is a lightweight console demonstration only; it does not create a PowerPoint file.
+
+## Build with Custom Inputs
 
 ```bash
-# Build demo presentation
-npm run build:demo
+node src/index.js \
+  --content path/to/content.json \
+  --theme path/to/theme.json \
+  --out output/my-deck.pptx \
+  --plan-out output/planned_content.json \
+  --notes output/speaker_notes.md
+```
 
-# Build with custom files
-npm run build-deck
+Validate without writing a deck:
 
-# Validate only
+```bash
 npm run validate
 ```
 
-### Option 3: Use programmatically
+## Inputs and Assets
 
-```javascript
-const buildDeck = require('./src/index');
+- `content.json` contains deck metadata and the ordered `slides` array.
+- `theme.json` contains colors, fonts, layout preferences, and asset configuration.
+- Image slides reference files under `assets/images/`; `assets/images/images.json` describes the available images.
 
-const content = {
-  deckTitle: "My Presentation",
-  slides: [
-    { type: "title", title: "Welcome" },
-    { type: "content", title: "Overview", bullets: ["Point 1", "Point 2"] }
-  ]
-};
+The repository currently contains the image manifest but not all referenced sample PNG files. A local build therefore warns and renders placeholders for those missing images. The GitHub Actions demo downloads temporary sample images before rendering; these are demonstration assets, not approved or attributed production visuals.
 
-const theme = { /* theme config */ };
+## Review Loop
 
-buildDeck(content, theme, 'output/my-deck.pptx');
-```
+1. Prepare or revise content and image assets.
+2. Run the build.
+3. Inspect the generated deck and contact sheet.
+4. Use `visual_self_review_prompt.md` for a manual AI design review if desired.
+5. Apply approved content, theme, asset, or layout edits and rebuild.
 
 ## Project Structure
 
-```
-├── src/
-│   ├── index.js           # Main entry point
-│   ├── deckBuilder.js     # Deck building logic
-│   ├── layouts.js         # All slide layout functions
-│   ├── theme.js           # Theme processing
-│   └── helpers.js         # Utility functions
-├── input/
-│   ├── content.json       # Sample content
-│   └── theme.json         # Sample theme
-├── demo.js                # Demo script
-└── package.json           # Dependencies and scripts
+```text
+src/                 Builder, layouts, validation, reporting, and rendering modules
+input/               Demo content and theme JSON
+assets/images/       Image manifest and local image assets
+scripts/             Contact-sheet helper
+demo-outputs/        Prebuilt demo deck, previews, reports, and contact sheet
+.github/workflows/   Demo build workflow
+TASKS.md             Project backlog and code-only priorities
+DEMO_STATUS.md       Verified demo status and known limitations
+DEMO_OUTPUT.md       Build commands and generated-artifact guide
 ```
 
-## Available Slide Types
+## GitHub Actions
 
-- `title` - Title slide
-- `section` - Section divider
-- `content` - Content with bullets
-- `two_column` - Two-column layout
-- `image_side` - Image with text
-- `comparison` - Side-by-side comparison
-- `process` - Step-by-step process
-- `quote` - Quote slide
-- `closing` - Closing slide
-- `big_number` - Metric/statistic display
-- And many more...
+`.github/workflows/demo.yml` installs the rendering dependencies, downloads temporary demo images, builds the demo, and uploads `output/` as a workflow artifact. It currently also commits refreshed demo outputs; moving generated output to artifacts-only delivery is a planned reliability improvement.
 
 ## License
 
