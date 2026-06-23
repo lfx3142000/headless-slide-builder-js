@@ -75,6 +75,11 @@ function toRecord(absPath, rootDir, metadata = {}) {
   const tags = unique([...(metadata.tags || []), ...tokenize(baseName)]);
   const description = metadata.description || metadata.alt || metadata.caption || '';
   const role = metadata.role || metadata.imageRole || null;
+  const provenance = metadata.provenance || {};
+  const source = metadata.source || provenance.source || null;
+  const license = metadata.license || provenance.license || null;
+  const attribution = metadata.attribution || provenance.attribution || null;
+  const prompt = metadata.prompt || metadata.generationPrompt || provenance.prompt || null;
   const tokens = unique([
     ...tokenize(id),
     ...tokenize(baseName),
@@ -82,7 +87,20 @@ function toRecord(absPath, rootDir, metadata = {}) {
     ...tags.flatMap(tokenize),
     ...tokenize(description)
   ]);
-  return { id, path: relPath, absPath, fileName, baseName, tags, description, role, width: dim.width, height: dim.height, aspectRatio: dim.aspectRatio, type: dim.type, tokens };
+  return { id, path: relPath, absPath, fileName, baseName, tags, description, role, source, license, attribution, prompt, width: dim.width, height: dim.height, aspectRatio: dim.aspectRatio, type: dim.type, tokens };
+}
+
+function validateImageProvenance(catalog = [], options = {}) {
+  const errors = [];
+  const warnings = [];
+  const strictProvenance = options.strictProvenance === true;
+  for (const record of catalog) {
+    if (record.source || record.prompt) continue;
+    const message = `Image asset has no provenance metadata: ${record.path}. Add source or prompt to the image manifest.`;
+    if (strictProvenance) errors.push(message);
+    else warnings.push(message);
+  }
+  return { errors, warnings };
 }
 
 function buildImageCatalog(theme = {}, options = {}) {
@@ -199,15 +217,20 @@ function resolveDeckImages(content, theme = {}, options = {}) {
       console.warn(`Image not resolved for slide ${index + 1}: ${next.title || next.type} (${next.imageUnresolved})`);
     }
     if (Array.isArray(next.images)) {
+      const unresolvedImages = [];
       next.images = next.images.map((imgRef) => {
         const match = resolveImageReference(imgRef, next, catalog, mergedOptions);
-        if (!match) return imgRef;
+        if (!match) {
+          unresolvedImages.push(typeof imgRef === 'string' ? imgRef : JSON.stringify(imgRef));
+          return imgRef;
+        }
         return { path: match.path, role: match.role || (typeof imgRef === 'object' ? imgRef.role || imgRef.imageRole : undefined), meta: match.meta, matchType: match.matchType };
       });
+      if (unresolvedImages.length) next.imagesUnresolved = unresolvedImages;
     }
     return next;
   });
   return { ...content, slides, imageCatalog: options.includeCatalog ? catalog.map(({ absPath, tokens, ...rest }) => rest) : undefined };
 }
 
-module.exports = { buildImageCatalog, resolveDeckImages, resolveImageReference, normalizeText, tokenize };
+module.exports = { buildImageCatalog, resolveDeckImages, resolveImageReference, validateImageProvenance, normalizeText, tokenize };

@@ -7,6 +7,8 @@ const { applyDesignPlan } = require('./designPlanner');
 const { buildImageCatalog } = require('./imageCatalog');
 const { writeQualityReport } = require('./qualityReporter');
 const { writeAdditionalReports } = require('./reportExporter');
+const { renderPreview, createContactSheet } = require('./previewRenderer');
+const { resolveRunConfig, usage } = require('./runConfig');
 
 function readJson(filePath) {
   const resolved = path.resolve(filePath);
@@ -18,72 +20,68 @@ function readJson(filePath) {
   }
 }
 
-function getArgValue(args, name, fallback) {
-  const idx = args.indexOf(name);
-  if (idx >= 0 && args[idx + 1]) return args[idx + 1];
-  return fallback;
-}
-
 async function main() {
   const args = process.argv.slice(2);
-  const validateOnly = args.includes('--validate-only');
-  const noDesign = args.includes('--no-design');
-  const noDeckDesign = args.includes('--no-deck-design');
-
-  const contentPath = getArgValue(args, '--content', process.env.CONTENT_JSON || 'input/content.json');
-  const themePath = getArgValue(args, '--theme', process.env.THEME_JSON || 'input/theme.json');
-  const outputPath = getArgValue(args, '--out', process.env.OUTPUT_PPTX || 'output/generated_deck.pptx');
-  const plannedContentPath = getArgValue(args, '--plan-out', process.env.PLANNED_CONTENT_JSON || null);
-  const notesPath = getArgValue(args, '--notes', process.env.NOTES_MD || null);
-  const imageCatalogPath = getArgValue(args, '--image-catalog', process.env.IMAGE_CATALOG_JSON || null);
-  const previewDir = getArgValue(args, '--preview', process.env.PREVIEW_DIR || null);
-  const contactSheetPath = getArgValue(args, '--contact-sheet', process.env.CONTACT_SHEET || null);
+  if (args.includes('--help')) {
+    console.log(usage());
+    return;
+  }
+  const config = resolveRunConfig(args);
+  if (config.deckMode) process.chdir(config.deckRoot);
 
   console.log('Headless Slide Builder');
   console.log('----------------------');
-  console.log(`Content: ${contentPath}`);
-  console.log(`Theme: ${themePath}`);
-  if (!validateOnly) console.log(`Output: ${outputPath}`);
+  if (config.deckMode) console.log(`Deck root: ${config.deckRoot}`);
+  console.log(`Content: ${config.contentPath}`);
+  console.log(`Theme: ${config.themePath}`);
+  if (!config.validateOnly) console.log(`Output: ${config.outputPath}`);
 
-  const content = readJson(contentPath);
-  const theme = readJson(themePath);
+  const content = readJson(config.contentPath);
+  const theme = readJson(config.themePath);
 
-  if (imageCatalogPath) {
+  if (config.imageCatalogPath) {
     const mergedForCatalog = mergeTheme(theme);
     const catalog = buildImageCatalog(mergedForCatalog).map(({ absPath, tokens, ...rest }) => rest);
-    fs.mkdirSync(path.dirname(path.resolve(imageCatalogPath)), { recursive: true });
-    fs.writeFileSync(path.resolve(imageCatalogPath), JSON.stringify({ generatedAt: new Date().toISOString(), images: catalog }, null, 2));
-    console.log(`Image catalog exported to ${path.resolve(imageCatalogPath)} (${catalog.length} images)`);
+    fs.mkdirSync(path.dirname(path.resolve(config.imageCatalogPath)), { recursive: true });
+    fs.writeFileSync(path.resolve(config.imageCatalogPath), JSON.stringify({ generatedAt: new Date().toISOString(), images: catalog }, null, 2));
+    console.log(`Image catalog exported to ${path.resolve(config.imageCatalogPath)} (${catalog.length} images)`);
   }
 
-  fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
-  const pptx = buildDeck(content, theme, { validateOnly, noDesign, noDeckDesign, plannedContentPath });
+  fs.mkdirSync(path.dirname(path.resolve(config.outputPath)), { recursive: true });
+  const pptx = buildDeck(content, theme, {
+    validateOnly: config.validateOnly,
+    noDesign: config.noDesign,
+    noDeckDesign: config.noDeckDesign,
+    strictAssets: config.strictAssets,
+    strictProvenance: config.strictProvenance,
+    plannedContentPath: config.plannedContentPath
+  });
   const plannedForOutputs = pptx?._slideBuilder?.plannedContent || null;
   const mergedForOutputs = pptx?._slideBuilder?.theme || mergeTheme(theme);
 
-  if (notesPath && plannedForOutputs) {
-    const notesWritten = exportSpeakerNotes(plannedForOutputs, notesPath);
+  if (config.notesPath && plannedForOutputs) {
+    const notesWritten = exportSpeakerNotes(plannedForOutputs, config.notesPath);
     console.log(`Speaker notes exported to ${notesWritten}`);
   }
 
-  if (!validateOnly) {
-    const written = await writeDeck(pptx, outputPath);
+  if (!config.validateOnly) {
+    const written = await writeDeck(pptx, config.outputPath);
     if (plannedForOutputs) {
-      const qualityPath = path.join(path.dirname(path.resolve(outputPath)), 'quality_report.md');
+      const outputDir = path.dirname(path.resolve(config.outputPath));
+      const qualityPath = path.join(outputDir, 'quality_report.md');
       const qualityWritten = writeQualityReport(plannedForOutputs, mergedForOutputs, qualityPath, pptx._slideBuilder || {});
       console.log(`Quality report exported to ${qualityWritten}`);
-      const reports = writeAdditionalReports(plannedForOutputs, mergedForOutputs, path.dirname(path.resolve(outputPath)), pptx._slideBuilder || {});
+      const reports = writeAdditionalReports(plannedForOutputs, mergedForOutputs, outputDir, pptx._slideBuilder || {});
       console.log(`Deck summary exported to ${reports.deckSummary}`);
       console.log(`References report exported to ${reports.references}`);
       console.log(`Visual self-review prompt exported to ${reports.visualReviewPrompt}`);
     }
     console.log(`\nSuccess: deck generated at ${written}`);
-    if (previewDir) {
-      const { renderPreview } = require('./previewRenderer');
-      const preview = renderPreview(written, previewDir);
-      if (preview && contactSheetPath) {
-        const { execFileSync } = require('child_process');
-        execFileSync('python3', ['scripts/contact_sheet.py', preview.outDir, contactSheetPath], { stdio: 'inherit' });
+    if (config.previewDir) {
+      const preview = renderPreview(written, config.previewDir);
+      if (preview && config.contactSheetPath) {
+        const contactSheet = createContactSheet(preview.outDir, config.contactSheetPath);
+        console.log(`Contact sheet created at ${contactSheet}`);
       }
     }
   }

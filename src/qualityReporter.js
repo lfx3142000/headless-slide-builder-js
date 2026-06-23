@@ -17,19 +17,26 @@ function scoreDeck(content, fitWarnings = []) {
   const layoutCounts = countBy(slides, (s) => s.type);
   const dominant = Object.entries(layoutCounts).sort((a,b)=>b[1]-a[1])[0];
   const slidesWithoutNotes = slides.filter((s) => !s.speakerNotes || (Array.isArray(s.speakerNotes) && s.speakerNotes.length === 0)).length;
-  const imageIssues = slides.filter((s) => (s.type || '').includes('image') && !s.image && !s.images).length;
+  const unresolvedImageSlides = slides
+    .map((slide, index) => ({ slide, index }))
+    .filter(({ slide }) => slide.imageUnresolved || slide.imagesUnresolved?.length || (slide.type || '').includes('image') && !slide.image && !slide.images);
+  const imageIssues = unresolvedImageSlides.length;
   const noClosing = !slides.some((s) => ['closing', 'summary_checklist'].includes(s.type));
   const noSection = slides.length > 6 && !slides.some((s) => s.type === 'section' || s.type === 'module_intro');
 
   if (fitWarnings.length) { score -= Math.min(20, fitWarnings.length * 3); issues.push(...fitWarnings); }
   if (dominant && dominant[1] > Math.ceil(slides.length * 0.45)) { score -= 8; issues.push(`Layout repetition: ${dominant[1]} of ${slides.length} slides use '${dominant[0]}'.`); }
   if (slidesWithoutNotes > Math.ceil(slides.length * 0.5)) { score -= 7; issues.push(`${slidesWithoutNotes} slides are missing speaker notes.`); }
-  if (imageIssues) { score -= imageIssues * 3; issues.push(`${imageIssues} image-layout slides are missing image assets.`); }
+  if (imageIssues) {
+    score -= imageIssues * 3;
+    const labels = unresolvedImageSlides.map(({ slide, index }) => `Slide ${index + 1}${slide.title ? ` (${slide.title})` : ''}`).join(', ');
+    issues.push(`${imageIssues} image-layout slides are missing or unresolved: ${labels}.`);
+  }
   if (noClosing) { score -= 5; issues.push('Deck does not include a closing or summary checklist slide.'); }
   if (noSection) { score -= 4; issues.push('Deck is longer than 6 slides but has no section/module divider.'); }
   if (content._layoutFallbacks?.count) { score -= Math.min(6, content._layoutFallbacks.count * 2); }
   score = Math.max(0, Math.min(100, Math.round(score)));
-  return { score, issues, layoutCounts, slidesWithoutNotes, imageIssues };
+  return { score, issues, layoutCounts, slidesWithoutNotes, imageIssues, unresolvedImageSlides };
 }
 
 function generateQualityReport(content, theme, context = {}) {

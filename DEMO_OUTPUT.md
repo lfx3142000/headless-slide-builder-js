@@ -46,7 +46,7 @@ node src/index.js \
   --contact-sheet output/contact_sheet.pdf
 ```
 
-The demo content currently produces a 27-slide, full-feature layout showcase. It includes title, section, content, comparison, metric, chart, process, timeline, table, image, quote, closing, and reference slides.
+The demo content currently produces a 28-slide, full-feature layout showcase. It includes title, section, content, comparison, metric, chart, process, timeline, paginated table, image, quote, closing, and reference slides. The large table is split into a continuation slide so no rows are dropped.
 
 ## Generated Artifacts
 
@@ -92,3 +92,13 @@ The GitHub Actions demo downloads temporary sample images before building. Do no
 5. Make approved edits to content, theme, assets, or layouts and rebuild.
 
 The visual-review prompt is designed for manual use with an AI assistant; the repository does not call any AI API automatically.
+
+## Deck-Package Command
+
+For a self-contained deck folder, use:
+
+```bash
+npm run build-deck -- --deck decks/<deck-id>
+```
+
+Deck mode expects `content.json` and `theme.json` inside the specified folder and writes the PowerPoint, reports, preview images, and contact sheet under that folder's `output/` directory. Add `--no-preview` to skip rendering, `--strict-assets` to reject unresolved image files, and `--strict-provenance` to require image source or generation-prompt metadata.
