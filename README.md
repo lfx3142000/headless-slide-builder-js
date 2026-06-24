@@ -84,7 +84,7 @@ See [`decks/README.md`](decks/README.md) for the package layout.
 - `theme.json` contains colors, fonts, layout preferences, and asset configuration.
 - Image slides reference files under `assets/images/`; `assets/images/images.json` describes the available images.
 
-The repository currently contains the image manifest but not all referenced sample PNG files. A normal local build therefore warns and renders placeholders for those missing images. Use `--strict-assets` to turn the same condition into a build failure. The GitHub Actions demo downloads temporary sample images before rendering; these are demonstration assets, not approved or attributed production visuals.
+The four image assets used by the full-feature demo are now present under `assets/images/` and record their generation prompts in `assets/images/images.json`. The demo passes both `--strict-assets` and `--strict-provenance`. Some unused legacy manifest entries still do not have matching files; production decks should provide only approved, attributable assets for the slides they use.
 
 ## Review Loop
 
@@ -111,7 +111,7 @@ DEMO_OUTPUT.md       Build commands and generated-artifact guide
 
 ## GitHub Actions
 
-`.github/workflows/demo.yml` installs the rendering dependencies, downloads temporary demo images, runs the full demo in strict-asset mode, and uploads `output/` as a workflow artifact. It uses read-only repository permissions and does not commit generated files back to `main`.
+`.github/workflows/demo.yml` installs the rendering dependencies, downloads temporary demo images for CI, runs the full demo in strict-asset mode, and uploads `output/` as a workflow artifact. It uses read-only repository permissions and does not commit generated files back to `main`.
 
 ## License
 

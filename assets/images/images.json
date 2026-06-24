@@ -4,25 +4,33 @@
       "id": "hero-workspace",
       "path": "assets/images/test-hero.png",
       "tags": ["hero", "workspace", "design", "professional", "cover"],
-      "description": "Wide clean studio workspace image suitable for title or full-bleed slides."
+      "description": "Wide clean studio workspace image suitable for title or full-bleed slides.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Premium blue-hour creative studio workspace, wide and crop-safe, with clear negative space for slide text."
     },
     {
       "id": "workspace",
       "path": "assets/images/test-workspace.png",
       "tags": ["workspace", "design", "desk", "planning", "creative"],
-      "description": "Neutral workspace and planning materials."
+      "description": "Neutral workspace and planning materials.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Refined creative workspace with notebook, pencil, swatches, plant, and abstract blue laptop display."
     },
     {
       "id": "data-flow",
       "path": "assets/images/test-data-flow.png",
       "tags": ["data", "flow", "ai", "technology", "automation", "digital"],
-      "description": "Futuristic AI data flow and dashboard image."
+      "description": "Futuristic AI data flow and dashboard image.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Abstract blue and amber data flow turning content into polished presentation cards, no text."
     },
     {
       "id": "meeting",
       "path": "assets/images/test-meeting.png",
       "tags": ["meeting", "executive", "presentation", "boardroom", "business"],
-      "description": "Professional boardroom meeting with presentation screens."
+      "description": "Professional boardroom meeting with presentation screens.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Professional collaborative boardroom workshop with abstract presentation screen and no readable text."
     },
     {
       "id": "corporate-interior",

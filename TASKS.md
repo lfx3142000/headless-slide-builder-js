@@ -19,7 +19,7 @@ This JavaScript slide-generation engine converts structured content JSON and the
 - `--deck` builds a self-contained deck package; `--strict-assets` and `--strict-provenance` enable production-oriented validation.
 - The repository includes a prebuilt demo deck, slide PNGs, and a one-page contact sheet under `demo-outputs/`; a refreshed 28-slide output was rendered and inspected on 2026-06-23.
 - Local preview generation supports `SOFFICE_PATH`, `PDFTOPPM_PATH`, and `PYTHON_PATH` overrides. GitHub Actions installs the required renderer dependencies for its demo run.
-- Missing local sample images still render as placeholders in permissive mode. Strict mode fails instead. Source provenance for the legacy bundled demo visuals is still not recorded.
+- The four images used by the full demo are present locally, generated with Codex on 2026-06-24, and include prompt provenance. The full demo passes strict asset and provenance validation.
 
 ## Existing Product Tasks
 
@@ -53,7 +53,8 @@ This JavaScript slide-generation engine converts structured content JSON and the
 | 21 | Add automated tests and a deterministic dependency lockfile | Done | `node --test` covers deck mode, table pagination, validation, quality reporting, and provenance. |
 | 22 | Harden GitHub Actions delivery | Done | CI uses `npm ci`, strict assets, read-only permissions, and workflow artifacts without auto-commits. |
 | 23 | Refresh the documentation after each verified build change | Done | Documentation updated after the 2026-06-23 code build and visual QA. |
-| 24 | Replace legacy demo images with attributed, approved assets | Pending | Required before a production or externally published deck. |
+| 24 | Replace legacy demo images with attributable assets | Done | Four purpose-built image assets added with generation-prompt provenance and visually reviewed in the full demo. |
+| 25 | Replace or remove unused legacy image-manifest entries | Pending | Keep manifests aligned with actual, approved assets. |
 
 ## Current Architecture
 

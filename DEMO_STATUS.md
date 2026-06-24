@@ -41,7 +41,7 @@ Add `--strict-assets` to fail if an image cannot be resolved, and `--strict-prov
 
 ### Missing local sample images
 
-The checked-in image manifest references sample files such as `assets/images/test-hero.png`, `test-meeting.png`, `test-workspace.png`, and `test-data-flow.png`, but those PNGs are not currently committed. A normal local build therefore warns and uses placeholders for the affected image slides. `--strict-assets` makes the same missing files a build error.
+The four images used by the full demo (`test-hero.png`, `test-meeting.png`, `test-workspace.png`, and `test-data-flow.png`) are present in `assets/images/`. They were purpose-built with Codex image generation on 2026-06-24, and their prompt provenance is recorded in `assets/images/images.json`. The full demo passes `--strict-assets` and `--strict-provenance` without placeholders.
 
 The GitHub Actions workflow downloads temporary Picsum images for its demo build. Those images are suitable only for testing: their provenance and usage rights are not recorded for production use.
 
@@ -57,7 +57,7 @@ If those dependencies are unavailable, deck generation still succeeds but previe
 
 ### Content-quality warnings in the current full demo
 
-- Four image-layout slides use placeholders because the local sample PNG files are absent.
+- The four image-layout slides use generated, crop-safe visuals and were visually reviewed after rendering.
 - Most demo slides do not contain speaker notes.
 - Placeholder image rendering is allowed in normal mode; strict missing-asset failure is available with `--strict-assets`.
 
@@ -77,7 +77,7 @@ The workflow uses `npm ci`, read-only repository permissions, and artifact-first
 ## Next Code Work
 
 1. Test the builder with real health-physics training content.
-2. Replace the legacy demo images with approved, attributed assets.
+2. Replace or remove unused legacy image-manifest entries so the manifest contains only approved assets.
 3. Verify editing behavior in Microsoft PowerPoint with representative course decks.
 4. Add instructor-led and online delivery variants where the course content requires them.
 

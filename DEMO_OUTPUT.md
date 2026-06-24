@@ -79,9 +79,9 @@ If any of those tools are unavailable, the builder reports that preview renderin
 
 ## Image Behavior
 
-Image slides reference paths under `assets/images/`. In the current checkout, some sample PNG files are absent even though their manifest entries exist. The builder warns and renders placeholders for those slides.
+Image slides reference paths under `assets/images/`. The four assets used by the full demo are present and record their Codex image-generation prompts in `assets/images/images.json`; the demo passes strict asset and provenance validation without placeholders.
 
-The GitHub Actions demo downloads temporary sample images before building. Do not treat those images as sourced or approved production assets; production decks need their own assets and provenance records.
+GitHub Actions still downloads temporary sample images before building its demo run. Production decks should use their own approved assets and record source or prompt provenance in the image manifest.
 
 ## Review Workflow
 
