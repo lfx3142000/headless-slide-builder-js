@@ -67,8 +67,11 @@ const DEFAULT_THEME = {
     footerText: 'Generated Deck',
     titleScale: 1,
     bodyScale: 1,
-    cardShadow: true,
-    accentBar: true,
+    cardShadow: false,
+    accentBar: false,
+    visualLanguage: 'editorial',
+    backdropStyle: 'none',
+    footerStyle: 'page_only',
     sectionStyle: 'bold',
     imageTreatment: 'rounded',
     layoutVariant: 'consulting'
@@ -153,23 +156,23 @@ function typography(slideData = {}, role = 'standard', theme = DEFAULT_THEME) {
   const scale = estimateTextScale(slideData) * (theme.style?.bodyScale || 1);
   const titleScale = theme.style?.titleScale || 1;
   const base = {
-    title: role === 'hero' ? 44 : role === 'section' ? 39 : 29,
-    subtitle: role === 'hero' ? 18 : 16,
-    body: 15.3,
-    bullet: 14.4,
+    title: role === 'hero' ? 50 : role === 'section' ? 40 : 35,
+    subtitle: role === 'hero' ? 20 : 18,
+    body: 17,
+    bullet: 16,
     small: 8.5,
     eyebrow: 8.3,
-    cardTitle: 15.8,
+    cardTitle: 21,
     metric: 34
   };
   return {
-    title: clamp(Math.round(base.title * titleScale * scale), role === 'hero' ? 34 : 23, role === 'hero' ? 52 : 35),
-    subtitle: clamp(Math.round(base.subtitle * scale), 12, 20),
-    body: clamp(Number((base.body * scale).toFixed(1)), 11.8, 17.2),
-    bullet: clamp(Number((base.bullet * scale).toFixed(1)), 11.4, 16.4),
+    title: clamp(Math.round(base.title * titleScale * scale), role === 'hero' ? 50 : 35, role === 'hero' ? 58 : 42),
+    subtitle: clamp(Math.round(base.subtitle * scale), 16, 22),
+    body: clamp(Number((base.body * scale).toFixed(1)), 16, 19),
+    bullet: clamp(Number((base.bullet * scale).toFixed(1)), 16, 18),
     small: base.small,
     eyebrow: base.eyebrow,
-    cardTitle: clamp(Number((base.cardTitle * scale).toFixed(1)), 12.6, 18.2),
+    cardTitle: clamp(Number((base.cardTitle * scale).toFixed(1)), 18, 24),
     metric: clamp(Math.round(base.metric * titleScale), 28, 44),
     bulletGapPt: totalGapFor(slideData)
   };

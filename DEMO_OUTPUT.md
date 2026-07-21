@@ -1,151 +1,123 @@
-# 🎬 Demo Execution Output
+# Demo Build Outputs
 
-This document shows what happens when you run the headless slide builder demo.
+## Purpose
 
-## Running the Demo
+This guide describes the current, working demo commands and the artifacts they produce. It supersedes the earlier two-slide output description.
 
-```bash
-$ node demo.js
-```
+## Quick Commands
 
-## Console Output
+Install dependencies:
 
-```
-Demo: Headless Slide Builder
-Deck: Q4 Results Presentation
-Slides: 2
-
-To build: npm run build:demo
-```
-
-## What the Demo Does
-
-The demo script (`demo.js`) demonstrates the slide builder by:
-
-1. **Defining Sample Content**
-   - Deck title: "Q4 Results Presentation"
-   - Subtitle: "Performance Summary" 
-   - Presenter: "Demo User"
-   - Date: Current date
-   - 2 slides:
-     - Slide 1: Title slide
-     - Slide 2: Content slide with bullet points
-
-2. **Outputting Basic Info**
-   - Shows the deck title
-   - Shows number of slides
-   - Provides next steps
-
-## To Actually Build a Presentation
-
-To generate a real PowerPoint file, you would:
-
-### Step 1: Clone the repository
-```bash
-git clone https://github.com/lfx3142000/headless-slide-builder-js.git
-cd headless-slide-builder-js
-```
-
-### Step 2: Install dependencies
 ```bash
 npm install
 ```
 
-This will install:
-- `pptxgenjs` - PowerPoint generation library
-- `fs` - File system operations
-- `path` - Path utilities
-
-### Step 3: Run the full build
-```bash
-npm run build:demo
-```
-
-This would execute:
-```bash
-node src/index.js --content input/content.json --theme input/theme.json --out output/demo_presentation.pptx
-```
-
-## Expected Output File
-
-When fully executed with dependencies installed, the code would generate:
-
-**File:** `output/demo_presentation.pptx`
-
-**Contents:**
-- ✅ Title slide with "Q4 Results Presentation"
-- ✅ Content slide with "Key Achievements"
-  - Revenue increased by 25%
-  - Launched 3 new features  
-  - Customer satisfaction: 92%
-
-**Styling:**
-- Professional theme
-- Branded colors
-- Consistent fonts
-- Proper spacing and layout
-
-## Full Demo Workflow
-
-```
-1. User runs: node demo.js
-   └─> Shows basic info about the demo content
-
-2. User runs: npm run build:demo
-   └─> index.js reads content and theme
-   └─> deckBuilder.js creates PPTX object
-   └─> layouts.js applies slide templates
-   └─> theme.js applies colors/fonts
-   └─> Output file written to disk
-
-3. Result: demo_presentation.pptx file created
-```
-
-## Live Demo Alternative
-
-Since browser-based execution isn't possible for Node.js with file system access, to see this in action you would need to:
-
-1. **Local execution** - Clone and run on your machine
-2. **Cloud IDE** - Use Replit, CodeSandbox, or Gitpod
-3. **CI/CD** - Set up GitHub Actions to build presentations automatically
-
-## Sample Code Flow
-
-```javascript
-// 1. Load content
-const content = require('./input/content.json');
-const theme = require('./input/theme.json');
-
-// 2. Initialize builder
-const pptx = new PptxGenJS();
-
-// 3. Process each slide
-content.slides.forEach(slideData => {
-  const layoutFn = layouts[slideData.type];
-  layoutFn(pptx, content, slideData, theme, index);
-});
-
-// 4. Save file
-pptx.writeFile('output/presentation.pptx');
-```
-
-## Next Steps
-
-To run this yourself:
+Print the lightweight console demonstration:
 
 ```bash
-# Clone the repo
-git clone https://github.com/lfx3142000/headless-slide-builder-js.git
-
-# Install dependencies  
-cd headless-slide-builder-js
-npm install
-
-# Run the demo
 node demo.js
+```
 
-# Build a full presentation
+Build the full-feature PowerPoint demo:
+
+```bash
 npm run build:demo
 ```
 
-The output will be a professional PowerPoint presentation ready to open in Microsoft PowerPoint, Google Slides, or any PPTX-compatible application! 🎉
+Build the current strict editorial demo package:
+
+```bash
+npm run build:demo-package
+```
+
+Validate demo inputs without generating a deck:
+
+```bash
+npm run validate
+```
+
+## Full Demo Build
+
+`npm run build:demo` executes the following logical command:
+
+```bash
+node src/index.js \
+  --content input/content.json \
+  --theme input/theme.json \
+  --out output/generated_deck.pptx \
+  --plan-out output/planned_content.json \
+  --notes output/speaker_notes.md \
+  --image-catalog output/image_catalog.json \
+  --preview output/preview \
+  --contact-sheet output/contact_sheet.pdf
+```
+
+The demo content currently produces a 28-slide, full-feature layout showcase. It includes title, section, content, comparison, metric, chart, process, timeline, paginated table, image, quote, closing, and reference slides. The large table is split into a continuation slide so no rows are dropped.
+
+`npm run build:demo-package` uses the same inputs with strict asset/provenance validation and writes the current polished output to `output/visual-demo-editorial/`, plus the contact sheet under `output/pdf/`.
+
+## Generated Artifacts
+
+| Path | Purpose |
+|---|---|
+| `output/generated_deck.pptx` | Editable PowerPoint deck. |
+| `output/planned_content.json` | Content after IDs, design rules, image resolution, fallbacks, and table formatting. |
+| `output/speaker_notes.md` | Exported speaker notes. |
+| `output/image_catalog.json` | Image manifest and local-asset scan. |
+| `output/quality_report.md` | Build warnings, layout mix, quality checks, and deterministic visual-QA rubric. |
+| `output/deck_summary.md` | Deck-level design and layout summary. |
+| `output/references.md` | Collected deck references. |
+| `output/visual_self_review_prompt.md` | Structured prompt for a manual AI visual review. |
+| `output/preview/` | Slide PNGs when render dependencies are available. |
+| `output/contact_sheet.pdf` | One-page slide grid when render dependencies are available. |
+
+## Editorial Demo Package Artifacts
+
+| Path | Purpose |
+|---|---|
+| `output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx` | Current strict editorial demo deck. |
+| `output/visual-demo-editorial/planned_content.json` | Planned content including synthesized speaker notes and resolved images. |
+| `output/visual-demo-editorial/speaker_notes.md` | Exported speaker notes; synthesized notes are marked for review. |
+| `output/visual-demo-editorial/quality_report.md` | Latest quality and visual-QA checks; current verified build reports quality 100/100 and visual QA 94/100. |
+| `output/visual-demo-editorial/preview-final/` | Rendered slide PNGs for visual QA. |
+| `output/pdf/headless-slide-builder-editorial-contact-sheet.pdf` | One-page PDF contact sheet for the editorial demo. |
+
+## Prebuilt Demo Artifacts
+
+`demo-outputs/` contains a previously rendered demo deck, 27 slide PNGs, and `contact_sheet.pdf`. These are useful for quickly reviewing the intended visual range without running the renderer locally.
+
+## Rendering Requirements
+
+The PowerPoint file is generated by Node.js. Preview PNGs and the contact sheet additionally require:
+
+- LibreOffice (`soffice`)
+- Poppler (`pdftoppm`)
+- Python with Pillow
+
+If any of those tools are unavailable, the builder reports that preview rendering is skipped. The `.pptx` and non-rendered reports are still written.
+
+## Image Behavior
+
+Image slides reference paths under `assets/images/`. The demo assets are present and record their Codex image-generation prompts in `assets/images/images.json`; the editorial demo passes strict asset and provenance validation without placeholders.
+
+GitHub Actions still downloads temporary sample images before building its demo run. Production decks should use their own approved assets and record source or prompt provenance in the image manifest.
+
+## Review Workflow
+
+1. Build the deck.
+2. Open `generated_deck.pptx` to verify editing behavior.
+3. Inspect the slide PNGs or the contact sheet.
+4. Review `quality_report.md` and `visual_self_review_prompt.md`.
+5. Make approved edits to content, theme, assets, or layouts and rebuild.
+
+The visual-review prompt is designed for manual use with an AI assistant; the repository does not call any AI API automatically.
+
+## Deck-Package Command
+
+For a self-contained deck folder, use:
+
+```bash
+npm run build-deck -- --deck decks/<deck-id>
+```
+
+Deck mode expects `content.json` and `theme.json` inside the specified folder and writes the PowerPoint, reports, preview images, and contact sheet under that folder's `output/` directory. Add `--no-preview` to skip rendering, `--strict-assets` to reject unresolved image files, and `--strict-provenance` to require image source or generation-prompt metadata.

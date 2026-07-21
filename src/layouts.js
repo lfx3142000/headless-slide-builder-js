@@ -27,6 +27,10 @@ function themeVariant(slideData, theme) {
   return slideData.variant || theme.style.layoutVariant || 'consulting';
 }
 
+function isEditorial(theme) {
+  return theme.style?.visualLanguage === 'editorial';
+}
+
 function addTitleSlide(pptx, content, slideData, theme) {
   const slide = pptx.addSlide();
   const style = getTextStyle(slideData, 'hero', theme);
@@ -98,7 +102,7 @@ function addContentSlide(pptx, content, slideData, theme, slideNumber) {
   const bullets = slideData.bullets || [];
   const hasBody = Boolean(slideData.body);
   const variant = slideData.variant || slideData.design?.layoutVariant || 'standard';
-  const y = 1.54;
+  const y = 1.58;
 
   if (variant === 'key_message' || variant === 'key_message_banner' || variant === 'split_insight') {
     addCard(slide, theme, { x: M.left, y, w: 4.25, h: 4.78, fill: theme.colors.primary, line: theme.colors.primary, lineTransparency: 100 });
@@ -109,10 +113,10 @@ function addContentSlide(pptx, content, slideData, theme, slideNumber) {
     const n = Math.min(bullets.length, 5);
     addCard(slide, theme, { x: M.left, y, w: SLIDE_W - M.left - M.right, h: 4.82, fill: theme.colors.white, line: theme.colors.border });
     bullets.slice(0, 5).forEach((bullet, idx) => {
-      const rowY = y + 0.45 + idx * (4.0 / Math.max(n,1));
-      slide.addText(String(idx + 1).padStart(2, '0'), { x: M.left + 0.38, y: rowY, w: 0.55, h: 0.22, fontFace: theme.fonts.heading, fontSize: 12, bold: true, color: theme.colors.accent, margin: 0 });
+      const rowY = y + 0.42 + idx * (4.03 / Math.max(n,1));
+      slide.addText(String(idx + 1).padStart(2, '0'), { x: M.left + 0.38, y: rowY, w: 0.62, h: 0.28, fontFace: theme.fonts.heading, fontSize: 15, bold: true, color: theme.colors.accent, margin: 0 });
       slide.addShape('line', { x: M.left + 1.08, y: rowY + 0.12, w: 0.58, h: 0, line: { color: theme.colors.border, width: 1 } });
-      slide.addText(String(bullet), { x: M.left + 1.86, y: rowY - 0.04, w: 9.72, h: 0.42, fontFace: theme.fonts.body, fontSize: style.bullet + 0.6, color: theme.colors.dark, margin: 0, fit: 'shrink' });
+      slide.addText(String(bullet), { x: M.left + 1.86, y: rowY - 0.05, w: 9.72, h: 0.52, fontFace: theme.fonts.body, fontSize: style.bullet + 0.5, color: theme.colors.dark, margin: 0, fit: 'shrink' });
     });
   } else if (variant === 'sidebar') {
     addCard(slide, theme, { x: M.left, y, w: 3.25, h: 4.82, fill: theme.colors.dark, line: theme.colors.dark, lineTransparency: 100 });
@@ -123,20 +127,31 @@ function addContentSlide(pptx, content, slideData, theme, slideNumber) {
   } else if (variant === 'cards' || variant === 'card_bullets' || (bullets.length > 0 && bullets.length <= 4 && !hasBody)) {
     const n = Math.min(bullets.length, 4);
     const gap = 0.28;
-    const cardW = (SLIDE_W - M.left - M.right - gap * (n - 1)) / Math.max(n, 1);
+    const columns = n === 4 ? 2 : n;
+    const rows = Math.ceil(n / columns);
+    const cardW = (SLIDE_W - M.left - M.right - gap * (columns - 1)) / Math.max(columns, 1);
+    const cardH = rows === 2 ? 2.24 : 4.74;
     bullets.slice(0, 4).forEach((bullet, idx) => {
-      const x = M.left + idx * (cardW + gap);
-      addCard(slide, theme, { x, y, w: cardW, h: 4.74, fill: theme.colors.white, line: theme.colors.border });
-      addIconBadge(slide, theme, slideData.icons?.[idx] || 'check', { x: x + 0.28, y: y + 0.32, w: 0.42, h: 0.42 }, { fill: idx % 2 ? theme.colors.secondary : theme.colors.primary, fontSize: 10 });
-      slide.addShape('rect', { x: x + 0.28, y: y + 0.94, w: 0.58, h: 0.05, fill: { color: theme.colors.accent }, line: { transparency: 100 } });
-      slide.addText(String(bullet), { x: x + 0.28, y: y + 1.25, w: cardW - 0.56, h: 2.75, fontFace: theme.fonts.body, fontSize: style.body, color: theme.colors.dark, margin: 0, fit: 'shrink', breakLine: false });
+      const x = M.left + (idx % columns) * (cardW + gap);
+      const cardY = y + Math.floor(idx / columns) * (cardH + gap);
+      addCard(slide, theme, { x, y: cardY, w: cardW, h: cardH, fill: theme.colors.white, line: theme.colors.border });
+      addIconBadge(slide, theme, slideData.icons?.[idx] || 'check', { x: x + 0.32, y: cardY + 0.32, w: 0.44, h: 0.44 }, { fill: idx % 2 ? theme.colors.secondary : theme.colors.primary, fontSize: 11 });
+      slide.addShape('rect', { x: x + 0.32, y: cardY + 0.97, w: 0.64, h: 0.055, fill: { color: theme.colors.accent }, line: { transparency: 100 } });
+      slide.addText(String(bullet), { x: x + 0.32, y: cardY + 1.18, w: cardW - 0.64, h: cardH - 1.44, fontFace: theme.fonts.body, fontSize: style.body, color: theme.colors.dark, margin: 0, fit: 'shrink', breakLine: false, valign: 'mid' });
     });
   } else {
     const cardH = 4.82;
-    addCard(slide, theme, { x: M.left, y, w: SLIDE_W - M.left - M.right, h: cardH, fill: theme.colors.white, line: theme.colors.border });
-    slide.addShape('rect', { x: M.left + 0.34, y: y + 0.34, w: 0.7, h: 0.05, fill: { color: theme.colors.accent }, line: { transparency: 100 } });
-    if (hasBody) addBody(slide, slideData.body, theme, style, { x: M.left + 0.42, y: y + 0.62, w: SLIDE_W - M.left - M.right - 0.84, h: 0.78, fontSize: style.body, color: theme.colors.dark });
-    addBullets(slide, bullets, theme, style, { x: M.left + 0.55, y: hasBody ? y + 1.65 : y + 0.72, w: SLIDE_W - M.left - M.right - 1.1, h: hasBody ? 2.92 : 3.95 });
+    if (isEditorial(theme)) {
+      slide.addShape('rect', { x: M.left, y, w: 0.11, h: cardH, fill: { color: theme.colors.primary }, line: { transparency: 100 } });
+      slide.addShape('line', { x: M.left + 0.42, y: y + 1.62, w: 8.75, h: 0, line: { color: theme.colors.border, width: 0.8 } });
+      if (hasBody) addBody(slide, slideData.body, theme, style, { x: M.left + 0.42, y: y + 0.34, w: 9.25, h: 0.9, fontSize: style.body, color: theme.colors.dark });
+      addBullets(slide, bullets, theme, style, { x: M.left + 0.46, y: hasBody ? y + 1.94 : y + 0.42, w: 8.65, h: hasBody ? 2.8 : 3.9, paraSpaceAfterPt: 10 });
+    } else {
+      addCard(slide, theme, { x: M.left, y, w: SLIDE_W - M.left - M.right, h: cardH, fill: theme.colors.white, line: theme.colors.border });
+      slide.addShape('rect', { x: M.left + 0.34, y: y + 0.34, w: 0.7, h: 0.05, fill: { color: theme.colors.accent }, line: { transparency: 100 } });
+      if (hasBody) addBody(slide, slideData.body, theme, style, { x: M.left + 0.48, y: y + 0.62, w: SLIDE_W - M.left - M.right - 0.96, h: 0.95, fontSize: style.body, color: theme.colors.dark });
+      addBullets(slide, bullets, theme, style, { x: M.left + 0.62, y: hasBody ? y + 1.88 : y + 0.86, w: SLIDE_W - M.left - M.right - 1.24, h: hasBody ? 2.7 : 3.72, paraSpaceAfterPt: 10 });
+    }
   }
   addSpeakerNotes(slide, slideData.speakerNotes);
 }
@@ -148,16 +163,17 @@ function addTwoColumnSlide(pptx, content, slideData, theme, slideNumber) {
   addTitle(slide, slideData.title, theme, style, { eyebrow: slideData.eyebrow });
   const y = 1.58;
   const cardW = 5.72;
-  const cardH = 4.76;
+  const cardH = 4.58;
   const columns = [
     { x: M.left, title: slideData.leftTitle || 'Column 1', bullets: slideData.leftBullets || [], color: theme.colors.primary },
     { x: SLIDE_W - M.right - cardW, title: slideData.rightTitle || 'Column 2', bullets: slideData.rightBullets || [], color: theme.colors.secondary }
   ];
+  if (isEditorial(theme)) slide.addShape('line', { x: SLIDE_W / 2, y: y + 0.06, w: 0, h: cardH - 0.12, line: { color: theme.colors.border, width: 0.8 } });
   columns.forEach((c) => {
-    addCard(slide, theme, { x: c.x, y, w: cardW, h: cardH, fill: theme.colors.white, line: theme.colors.border });
+    if (!isEditorial(theme)) addCard(slide, theme, { x: c.x, y, w: cardW, h: cardH, fill: theme.colors.white, line: theme.colors.border });
     slide.addShape('rect', { x: c.x + 0.34, y: y + 0.38, w: 0.62, h: 0.055, fill: { color: c.color }, line: { transparency: 100 } });
-    addCardHeader(slide, c.title, theme, { x: c.x + 0.34, y: y + 0.62, w: cardW - 0.68, h: 0.38 }, { color: c.color, fontSize: style.cardTitle });
-    addBullets(slide, c.bullets, theme, style, { x: c.x + 0.43, y: y + 1.24, w: cardW - 0.86, h: 3.05 });
+    addCardHeader(slide, c.title, theme, { x: c.x + 0.34, y: y + 0.58, w: cardW - 0.68, h: 0.48 }, { color: c.color, fontSize: style.cardTitle });
+    addBullets(slide, c.bullets, theme, style, { x: c.x + 0.43, y: y + 1.3, w: cardW - 0.86, h: 2.95, paraSpaceAfterPt: 10 });
   });
   addSpeakerNotes(slide, slideData.speakerNotes);
 }
@@ -209,9 +225,9 @@ function addComparisonSlide(pptx, content, slideData, theme, slideNumber) {
   cards.forEach((c) => {
     addCard(slide, theme, { x: c.x, y, w: cardW, h: cardH, fill: theme.colors.white, line: theme.colors.border });
     slide.addShape('rect', { x: c.x, y, w: cardW, h: 0.18, fill: { color: c.color }, line: { transparency: 100 } });
-    slide.addText(c.title, { x: c.x + 0.34, y: y + 0.58, w: cardW - 0.68, h: 0.36, fontFace: theme.fonts.heading, fontSize: style.cardTitle, bold: true, color: c.color, margin: 0, fit: 'shrink' });
-    slide.addShape('line', { x: c.x + 0.32, y: y + 1.16, w: cardW - 0.64, h: 0, line: { color: theme.colors.border, width: 0.8 } });
-    addBullets(slide, c.bullets, theme, style, { x: c.x + 0.45, y: y + 1.48, w: cardW - 0.9, h: 2.82 });
+    slide.addText(c.title, { x: c.x + 0.34, y: y + 0.52, w: cardW - 0.68, h: 0.5, fontFace: theme.fonts.heading, fontSize: style.cardTitle, bold: true, color: c.color, margin: 0, fit: 'shrink' });
+    slide.addShape('line', { x: c.x + 0.32, y: y + 1.2, w: cardW - 0.64, h: 0, line: { color: theme.colors.border, width: 0.8 } });
+    addBullets(slide, c.bullets, theme, style, { x: c.x + 0.45, y: y + 1.48, w: cardW - 0.9, h: 2.82, paraSpaceAfterPt: 10 });
   });
   slide.addShape('ellipse', { x: 6.22, y: 3.36, w: 0.82, h: 0.82, fill: { color: theme.colors.accent }, line: { color: theme.colors.accent, transparency: 100 } });
   slide.addText(slideData.centerLabel || 'vs', { x: 6.22, y: 3.61, w: 0.82, h: 0.18, align: 'center', fontFace: theme.fonts.body, fontSize: 10, bold: true, color: theme.colors.white, margin: 0 });
@@ -400,8 +416,8 @@ function addTimelineSlide(pptx, content, slideData, theme, slideNumber) {
     slide.addShape('line', { x, y: above ? y - 0.22 : y + 0.22, w: 0, h: above ? -0.38 : 0.38, line: { color: theme.colors.border, width: 1 } });
     const label = typeof item === 'object' ? item.label || item.date || `Step ${idx + 1}` : `Step ${idx + 1}`;
     const text = typeof item === 'object' ? item.title || item.body || '' : String(item);
-    addTag(slide, label, theme, { x: x - 0.63, y: boxY, w: 1.26, h: 0.26 }, { color: idx % 2 ? theme.colors.secondary : theme.colors.primary });
-    slide.addText(text, { x: x - 1.05, y: boxY + 0.4, w: 2.1, h: boxH, align: 'center', fontFace: theme.fonts.body, fontSize: 10.2, color: theme.colors.dark, margin: 0, fit: 'shrink' });
+    addTag(slide, label, theme, { x: x - 0.78, y: boxY, w: 1.56, h: 0.34 }, { color: idx % 2 ? theme.colors.secondary : theme.colors.primary, fontSize: 9.2 });
+    slide.addText(text, { x: Math.min(SLIDE_W - 2.6, Math.max(0.12, x - 1.24)), y: boxY + 0.48, w: 2.48, h: boxH, align: 'center', fontFace: theme.fonts.body, fontSize: 14, color: theme.colors.dark, margin: 0, fit: 'shrink' });
   });
   addSpeakerNotes(slide, slideData.speakerNotes);
 }

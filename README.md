@@ -1,92 +1,127 @@
-# headless-slide-builder-js
-Headless AI-assisted PowerPoint slide builder using Node.js and pptxgenjs
+# Headless Slide Builder (JS)
 
-## Overview
+Headless PowerPoint generation with Node.js and PptxGenJS. The builder takes structured content and a theme, then produces a `.pptx` deck plus planning and quality artifacts.
 
-This is a headless PowerPoint presentation builder that uses Node.js and pptxgenjs to generate professional slide decks programmatically. It supports multiple layout types, themes, and design systems.
+## Current Status
 
-## Features
+The core builder is working. On 2026-07-21, the editorial full-feature demo built successfully as a 28-slide PowerPoint deck with planned-content, speaker-notes, quality, reference, image-catalog, preview, and contact-sheet artifacts. The table reference slide is split across two slides so no rows are discarded, and deterministic speaker-note synthesis now removes the prior missing-notes quality warning.
 
-- 🎨 **Multiple Layout Types**: Title, content, two-column, image slides, charts, and more
-- 🎭 **Theme Support**: Customizable colors, fonts, and styling
-- 📊 **Data Visualization**: Built-in chart and metric layouts
-- 🔧 **Modular Design**: Clean separation of layouts, themes, and content
-- ✅ **Quality Checking**: Built-in validation and quality reporting
+The code-only reliability work is in place: deck-specific input packaging, strict asset/provenance validation switches, configurable preview/contact-sheet generation, table pagination, GitHub Actions artifact delivery, and Node-native tests. AI APIs are not part of the current implementation scope; content drafting and visual review may be done manually with an AI tool outside the codebase.
 
-## Installation
+## What It Does
+
+- Generates title, section, content, comparison, metric, chart, process, timeline, table, image, quote, closing, and reference slides.
+- Applies theme colors, fonts, layout variants, and deck-level visual rhythm.
+- Validates content and theme JSON, reports fit and visual-QA warnings, and exports planned content.
+- Supports `--strict-assets` and `--strict-provenance` for production-oriented validation.
+- Splits oversized table and compliance-matrix data across continuation slides instead of dropping rows.
+- Exports authored or deterministically synthesized speaker notes, quality, visual-QA, reference, deck-summary, and visual-review reports.
+- Renders slide PNGs and a one-page contact sheet when LibreOffice, Poppler, and Pillow are available.
+
+## Requirements
+
+- Node.js 18 or later
+- npm
+- Optional preview tooling: LibreOffice (`soffice`), Poppler (`pdftoppm`), and Python with Pillow
+
+## Install
 
 ```bash
 npm install
 ```
 
-## Quick Start - Run the Demo
-
-### Option 1: Run the demo script
+## Build the Full Demo
 
 ```bash
-node demo.js
+npm run build:demo
 ```
 
-### Option 2: Build a presentation using npm scripts
+The full demo reads `input/content.json` and `input/theme.json` and writes artifacts to `output/`, including:
+
+- `generated_deck.pptx`
+- `planned_content.json`
+- `speaker_notes.md`
+- `quality_report.md`
+- `deck_summary.md`
+- `references.md`
+- `visual_self_review_prompt.md`
+- `preview/` and `contact_sheet.pdf` when preview dependencies are available
+
+`node demo.js` is a lightweight console demonstration only; it does not create a PowerPoint file.
+
+For the current strict editorial demo package, use:
 
 ```bash
-# Build demo presentation
-npm run build:demo
+npm run build:demo-package
+```
 
-# Build with custom files
-npm run build-deck
+This writes the PPTX, planned content, speaker notes, image catalog, rendered preview slides, and one-page contact sheet under `output/visual-demo-editorial/` and `output/pdf/`.
 
-# Validate only
+## Build with Custom Inputs
+
+```bash
+node src/index.js \
+  --content path/to/content.json \
+  --theme path/to/theme.json \
+  --out output/my-deck.pptx \
+  --plan-out output/planned_content.json \
+  --notes output/speaker_notes.md
+```
+
+Validate without writing a deck:
+
+```bash
 npm run validate
 ```
 
-### Option 3: Use programmatically
+## Build a Deck Package
 
-```javascript
-const buildDeck = require('./src/index');
+Keep a deck's content, theme, assets, and generated output together in a folder under `decks/`:
 
-const content = {
-  deckTitle: "My Presentation",
-  slides: [
-    { type: "title", title: "Welcome" },
-    { type: "content", title: "Overview", bullets: ["Point 1", "Point 2"] }
-  ]
-};
-
-const theme = { /* theme config */ };
-
-buildDeck(content, theme, 'output/my-deck.pptx');
+```bash
+npm run build-deck -- --deck decks/<deck-id>
 ```
+
+Deck mode expects `content.json` and `theme.json` inside the supplied folder and writes all generated artifacts under that folder's `output/` directory. Add `--strict-assets` to reject missing image files and `--strict-provenance` to require each available image asset to record a source or generation prompt.
+
+See [`decks/README.md`](decks/README.md) for the package layout.
+
+## Inputs and Assets
+
+- `content.json` contains deck metadata and the ordered `slides` array.
+- `theme.json` contains colors, fonts, layout preferences, and asset configuration.
+- Image slides reference files under `assets/images/`; `assets/images/images.json` describes the available images.
+
+The demo image assets are present under `assets/images/` and record their generation prompts in `assets/images/images.json`. The editorial demo passes both `--strict-assets` and `--strict-provenance`. Production decks should provide only approved, attributable assets for the slides they use.
+
+## Review Loop
+
+1. Prepare or revise content and image assets.
+2. Run the build.
+3. Inspect the generated deck and contact sheet.
+4. Use `visual_self_review_prompt.md` for a manual AI design review if desired.
+5. Apply approved content, theme, asset, or layout edits and rebuild.
+
+The generated quality report now includes a deterministic visual-QA rubric for long titles, text-heavy slides, text-only slide runs, repeated images, divider visual coverage, and overall visual ratio. It does not replace full visual inspection, but it catches common “this feels less professional than it should” problems before review.
 
 ## Project Structure
 
-```
-├── src/
-│   ├── index.js           # Main entry point
-│   ├── deckBuilder.js     # Deck building logic
-│   ├── layouts.js         # All slide layout functions
-│   ├── theme.js           # Theme processing
-│   └── helpers.js         # Utility functions
-├── input/
-│   ├── content.json       # Sample content
-│   └── theme.json         # Sample theme
-├── demo.js                # Demo script
-└── package.json           # Dependencies and scripts
+```text
+src/                 Builder, layouts, validation, reporting, and rendering modules
+input/               Demo content and theme JSON
+assets/images/       Image manifest and local image assets
+scripts/             Contact-sheet helper
+demo-outputs/        Prebuilt demo deck, previews, reports, and contact sheet
+.github/workflows/   Demo build workflow
+decks/               Deck-package format documentation
+TASKS.md             Project backlog and code-only priorities
+DEMO_STATUS.md       Verified demo status and known limitations
+DEMO_OUTPUT.md       Build commands and generated-artifact guide
 ```
 
-## Available Slide Types
+## GitHub Actions
 
-- `title` - Title slide
-- `section` - Section divider
-- `content` - Content with bullets
-- `two_column` - Two-column layout
-- `image_side` - Image with text
-- `comparison` - Side-by-side comparison
-- `process` - Step-by-step process
-- `quote` - Quote slide
-- `closing` - Closing slide
-- `big_number` - Metric/statistic display
-- And many more...
+`.github/workflows/demo.yml` installs the rendering dependencies, downloads temporary demo images for CI, runs the full demo in strict-asset mode, and uploads `output/` as a workflow artifact. It uses read-only repository permissions and does not commit generated files back to `main`.
 
 ## License
 

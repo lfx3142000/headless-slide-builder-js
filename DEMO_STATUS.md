@@ -1,116 +1,86 @@
-# Demo Status & Issue Resolution
+# Demo Build Status
 
-## Current Problem
+## Current Status
 
-The headless slide builder demo is failing with a **SyntaxError in src/layouts.js** (line 9: "Unexpected identifier").
+**Working - verified 2026-07-21.** The previously reported `src/layouts.js` syntax error is no longer present. The complete builder and its supporting modules are in the repository, and the editorial full-feature demo builds successfully.
 
-## Root Cause
+The verified build produced a 28-slide PowerPoint deck and these supporting artifacts:
 
-The `layouts.js` file from Google Drive was partially copied during migration. The file is very large (~2000+ lines) and contains complex JavaScript slide layout functions. During the copy/paste process from Google Drive's viewer, the file was truncated or had formatting issues that created a syntax error.
+- planned content JSON
+- speaker-notes Markdown
+- quality report
+- deck summary
+- references report
+- visual-review prompt
+- rendered slide PNGs and a one-page PDF contact sheet
 
-## What's Working ✅
+The table reference that previously warned about dropped rows now renders as two continuation slides. The final contact sheet was visually inspected after rendering.
 
-1. **GitHub Actions workflow** - Properly configured and running
-2. **Dependencies installation** - npm install completes successfully  
-3. **Demo script execution** - The simple demo.js runs without errors
-4. **Input files** - `input/content.json` and `input/theme.json` exist and are valid JSON
-5. **Most source files migrated**:
-   - package.json
-   - src/index.js
-   - src/deckBuilder.js
-   - src/deckDesigner.js
-   - src/deckTypes.js
-   - src/designPlanner.js
-   - src/fitChecker.js
-   - src/helpers.js
-   - src/imageCatalog.js
-   - src/layoutFallbacks.js
-   - src/theme.js
-   - src/notesExporter.js
-   - src/previewRenderer.js
-   - src/qualityReporter.js
+The latest generated quality report scores 100/100, with a visual-QA score of 94/100, 0 slides missing speaker notes, 0 missing image assets, and 0 layout fallback events. Speaker notes are deterministically synthesized from existing slide content when source-authored notes are absent.
 
-## What's Broken ❌
+The repository also includes an earlier pre-rendered demo deck, slide PNGs, and a one-page contact sheet in `demo-outputs/`.
 
-1. **src/layouts.js** - Contains syntax error preventing execution
-2. **Missing files** - Still need these from Google Drive:
-   - src/reportExporter.js
-   - src/revisionTracker.js
-   - src/tableFormatter.js
-   - src/validator.js
+## Verified Build Command
 
-## Demo Input Files
-
-### `input/content.json`
-Contains slide definitions:
-- Deck title: "AI Presentation Design Engine Demo v10"
-- Slides array with various slide types (title, content, two_column, etc.)
-- Complete presentation structure with 30+ slides
-
-### `input/theme.json`  
-Defines presentation theme:
-- Color scheme (primary, secondary, accent colors)
-- Font definitions (heading: Montserrat, body: Open Sans)
-- Layout variant: "consulting"
-- Brand settings
-
-## Solution Options
-
-### Option 1: Fix layouts.js (RECOMMENDED)
-1. Download the complete `layouts.js` from Google Drive manually
-2. Create a new file in GitHub with the correct, complete code
-3. Ensure no syntax errors or truncation
-4. Re-run the workflow
-
-### Option 2: Simplified Demo
-1. Create a minimal `layouts.js` with just 2-3 basic layout functions
-2. Modify `input/content.json` to only use those layouts
-3. Generate a simple 2-3 slide presentation
-4. Demonstrate the workflow works end-to-end
-
-### Option 3: Direct File Upload
-1. Use GitHub's web interface to upload `layouts.js` directly
-2. Download from Google Drive first
-3. Upload as a new file
-
-## Next Steps
-
-1. **Fix the syntax error in layouts.js** - The file needs to be completely re-copied from Google Drive
-2. **Complete missing files** - Add the remaining 4 source files
-3. **Test the build** - Run `npm run build:demo` locally or via GitHub Actions
-4. **Generate PowerPoint** - Workflow should create `output/demo.pptx`
-5. **Download artifact** - The PPTX file will be available as a GitHub Actions artifact
-
-## Workflow Execution
-
-The GitHub Actions workflow (`.github/workflows/demo.yml`) is configured to:
-
-```yaml
-- Create output directory
-- Run: npm run build:demo
-- Upload the generated PPTX as an artifact
+```bash
+npm install
+npm run build:demo-package
 ```
 
-Once layouts.js is fixed, the workflow will successfully:
-1. Install dependencies (pptxgenjs, etc.)
-2. Execute src/index.js with content.json and theme.json
-3. Generate a PowerPoint presentation
-4. Save it as output/demo.pptx
-5. Upload as a downloadable artifact
+`npm run build:demo-package` runs `src/index.js` with the demo content and theme, strict asset/provenance checks, preview rendering, and contact-sheet output. It writes the current editorial deck to `output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx`.
 
-## Error Details
+Build a self-contained deck package with automatic reports:
 
-```
-SyntaxError: Unexpected identifier
-    at Module._compile (node:internal/modules/cjs/loader:1364:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
-    at Module.load (node:internal/modules/cjs/loader:1203:32)
-    at require (node:internal/modules/helpers:177:18)
-    at Object.<anonymous> (/home/runner/work/headless-slide-builder-js/src/deckBuilder.js:4:21)
+```bash
+npm run build-deck -- --deck decks/<deck-id>
 ```
 
-The error originates when `deckBuilder.js` tries to `require('./layouts')` and encounters the syntax error in that file.
+Add `--strict-assets` to fail if an image cannot be resolved, and `--strict-provenance` to fail if available image assets have no source or generation prompt metadata.
 
-## Recommendation
+`node demo.js` is intentionally smaller: it prints a two-slide example to the console and tells the user how to run the full build. It does not write a `.pptx` file.
 
-**To complete the demo successfully**, the `layouts.js` file must be correctly migrated from Google Drive. This is the single blocking issue preventing successful PowerPoint generation.
+## Known Limitations
+
+### Missing local sample images
+
+The four images used by the full demo (`test-hero.png`, `test-meeting.png`, `test-workspace.png`, and `test-data-flow.png`) are present in `assets/images/`. They were purpose-built with Codex image generation on 2026-06-24, and their prompt provenance is recorded in `assets/images/images.json`. The full demo passes `--strict-assets` and `--strict-provenance` without placeholders.
+
+The GitHub Actions workflow downloads temporary Picsum images for its demo build. Those images are suitable only for testing: their provenance and usage rights are not recorded for production use.
+
+### Local preview dependencies
+
+Preview rendering requires all of the following on `PATH`:
+
+- LibreOffice (`soffice`) to convert PowerPoint to PDF
+- Poppler (`pdftoppm`) to create slide PNGs
+- Python with Pillow to make the contact sheet
+
+If those dependencies are unavailable, deck generation still succeeds but preview and contact-sheet generation are skipped. Set `SOFFICE_PATH`, `PDFTOPPM_PATH`, and `PYTHON_PATH` to explicit executable paths when tools are installed outside `PATH`. GitHub Actions installs them for the demo workflow.
+
+### Content-quality notes in the current full demo
+
+- The four image-layout slides use generated, crop-safe visuals and were visually reviewed after rendering.
+- Demo slides now contain either authored or deterministic speaker notes. Auto-generated notes are marked for human review before live delivery.
+- Placeholder image rendering is allowed in normal mode; strict missing-asset failure is available with `--strict-assets`.
+
+## GitHub Actions
+
+`.github/workflows/demo.yml` is configured to:
+
+1. check out the repository;
+2. install Node.js, LibreOffice, Poppler, and Pillow;
+3. download temporary demo images;
+4. run `npm run build:demo`;
+5. build in strict-asset mode; and
+6. upload `output/` as a workflow artifact.
+
+The workflow uses `npm ci`, read-only repository permissions, and artifact-first delivery. It does not commit generated files back to `main`.
+
+## Next Code Work
+
+1. Test the builder with real health-physics training content.
+2. Verify editing behavior in Microsoft PowerPoint with representative course decks.
+3. Add instructor-led and online delivery variants where the course content requires them.
+4. Extend the visual-QA rubric with rendered-slide measurements for crop, spacing, and hierarchy once the renderer is available in all target environments.
+
+See `TASKS.md` for the source-of-truth backlog and `DEMO_OUTPUT.md` for the current build outputs.

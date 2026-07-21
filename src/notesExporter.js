@@ -1,15 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
-function notesToString(notes) {
-  if (!notes) return '';
-  if (Array.isArray(notes)) return notes.map((n) => `- ${n}`).join('\n');
-  if (typeof notes === 'object') {
-    const labels = { talkTrack: 'Talk track', facilitatorPrompt: 'Facilitator prompt', expectedAnswer: 'Expected answer', transition: 'Transition', decisionPoint: 'Decision point' };
-    return Object.entries(notes).filter(([, v]) => v).map(([k, v]) => `**${labels[k] || k}:**\n${Array.isArray(v) ? v.map(x => `- ${x}`).join('\n') : String(v)}`).join('\n\n');
-  }
-  return String(notes);
-}
+const { formatSpeakerNotes } = require('./speakerNotes');
 
 function exportSpeakerNotes(content, outputPath) {
   const lines = [];
@@ -18,7 +9,7 @@ function exportSpeakerNotes(content, outputPath) {
   lines.push('');
   (content.slides || []).forEach((slide, idx) => {
     lines.push(`\n## Slide ${idx + 1}: ${slide.title || slide.type || 'Untitled'}`);
-    const notes = notesToString(slide.speakerNotes);
+    const notes = formatSpeakerNotes(slide.speakerNotes);
     if (notes) lines.push(`\n${notes}`);
     else lines.push('\n_No speaker notes provided._');
   });

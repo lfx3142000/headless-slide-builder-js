@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { scoreDeck } = require('./qualityReporter');
+const { analyzeVisualQuality } = require('./visualQa');
 
 function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(path.resolve(filePath)), { recursive: true });
@@ -28,6 +29,7 @@ function writeReferencesReport(content, outputPath) {
 function writeDeckSummary(content, theme, outputPath, context = {}) {
   const slides = content.slides || [];
   const score = scoreDeck(content, context.fitWarnings || []);
+  const visualQa = analyzeVisualQuality(content, theme);
   const lines = [
     '# Deck Summary', '',
     `Deck: ${content.deckTitle || 'Untitled Deck'}`,
@@ -37,6 +39,7 @@ function writeDeckSummary(content, theme, outputPath, context = {}) {
     `Designer intent: ${theme.designerIntent || ''}`,
     `Slides: ${slides.length}`,
     `Quality score: ${score.score}/100`,
+    `Visual QA score: ${visualQa.score}/100`,
     '', '## Design System',
     `- Title mood: ${theme.designTokens?.titleSlideMood || 'default'}`,
     `- Image style: ${theme.designTokens?.imageStyle || 'default'}`,
@@ -49,15 +52,17 @@ function writeDeckSummary(content, theme, outputPath, context = {}) {
   lines.push('', '## Recommended Review Items');
   if (!score.issues.length) lines.push('- No major automated review issues detected.');
   score.issues.forEach(issue => lines.push(`- ${issue}`));
+  visualQa.issues.forEach(issue => lines.push(`- Visual QA: ${issue}`));
   ensureDir(outputPath);
   fs.writeFileSync(path.resolve(outputPath), lines.join('\n'));
   return path.resolve(outputPath);
 }
 
 function generateVisualReviewPrompt(content, theme) {
+  const visualQa = analyzeVisualQuality(content, theme);
   const slideLines = (content.slides || []).map((s, i) =>
     `${i + 1}. ${s.type}${s.variant ? `/${s.variant}` : ''}: ${s.title || '(untitled)'}`).join('\n');
-  return `# Visual Self-Review Prompt\n\nUse this prompt after generating a deck preview/contact sheet. Review the slide images visually and propose edits to content JSON, theme JSON, or layout variants.\n\n## Guardrails\n\n- Do not change factual content unless the user explicitly asks.\n- Prefer design edits: layout variant, image role, image query, theme token, spacing, font scaling, or speaker notes.\n- Be specific about slide number and target JSON field.\n- Keep recommendations executable by an AI coding agent.\n\n## Deck Context\n\nDeck: ${content.deckTitle || 'Untitled Deck'}\nTheme: ${theme.themeName || 'Unnamed Theme'}\nDeck type: ${content.deckType || 'not specified'}\nDesign tokens: ${JSON.stringify(theme.designTokens || {}, null, 2)}\n\n## Slide List\n\n${slideLines}\n\n## Required Output\n\nReturn JSON only:\n\n{\n  \"overallAssessment\": \"\",\n  \"themeEdits\": [],\n  \"contentEdits\": [\n    {\n      \"slideNumber\": 1,\n      \"issue\": \"\",\n      \"editTarget\": \"content.json | theme.json | layout code\",\n      \"recommendedChange\": \"\",\n      \"reason\": \"\"\n    }\n  ],\n  \"priorityFixes\": []\n}\n`;
+  return `# Visual Self-Review Prompt\n\nUse this prompt after generating a deck preview/contact sheet. Review the slide images visually and propose edits to content JSON, theme JSON, or layout variants.\n\n## Guardrails\n\n- Do not change factual content unless the user explicitly asks.\n- Prefer design edits: layout variant, image role, image query, theme token, spacing, font scaling, or speaker notes.\n- Be specific about slide number and target JSON field.\n- Keep recommendations executable by an AI coding agent.\n\n## Deck Context\n\nDeck: ${content.deckTitle || 'Untitled Deck'}\nTheme: ${theme.themeName || 'Unnamed Theme'}\nDeck type: ${content.deckType || 'not specified'}\nDesign tokens: ${JSON.stringify(theme.designTokens || {}, null, 2)}\n\n## Automated Visual QA Snapshot\n\nScore: ${visualQa.score}/100\nVisual ratio: ${visualQa.visualRatio}\nIssues:\n${visualQa.issues.length ? visualQa.issues.map((issue) => `- ${issue}`).join('\n') : '- No automated visual QA issues detected.'}\n\n## Slide List\n\n${slideLines}\n\n## Required Output\n\nReturn JSON only:\n\n{\n  \"overallAssessment\": \"\",\n  \"themeEdits\": [],\n  \"contentEdits\": [\n    {\n      \"slideNumber\": 1,\n      \"issue\": \"\",\n      \"editTarget\": \"content.json | theme.json | layout code\",\n      \"recommendedChange\": \"\",\n      \"reason\": \"\"\n    }\n  ],\n  \"priorityFixes\": []\n}\n`;
 }
 
 function writeVisualReviewPrompt(content, theme, outputPath) {

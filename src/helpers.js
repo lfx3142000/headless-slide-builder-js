@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { imageSize } = require('image-size');
 const { typography } = require('./theme');
+const { formatSpeakerNotes } = require('./speakerNotes');
 
 const SLIDE_W = 13.333;
 const SLIDE_H = 7.5;
@@ -34,6 +35,7 @@ function addTopAccent(slide, theme, color = theme.colors.primary) {
 }
 
 function addSoftBackdrop(slide, theme) {
+  if (theme.style?.backdropStyle === 'none') return;
   slide.addShape('arc', { x: 10.85, y: -1.0, w: 3.2, h: 3.2, adjustPoint: 0.25, fill: { color: theme.colors.secondary, transparency: 90 }, line: { color: theme.colors.secondary, transparency: 100 } });
   slide.addShape('arc', { x: -1.15, y: 5.9, w: 2.35, h: 2.35, adjustPoint: 0.25, fill: { color: theme.colors.accent, transparency: 91 }, line: { color: theme.colors.accent, transparency: 100 } });
 }
@@ -61,6 +63,10 @@ function addBrandMark(slide, theme, opts = {}) {
 function addFooter(slide, theme, slideNumber) {
   if (!theme.style.useFooter) return;
   const MX = getMargins(theme);
+  if (theme.style.footerStyle === 'page_only') {
+    slide.addText(String(slideNumber).padStart(2, '0'), { x: SLIDE_W - MX.right - 0.36, y: SLIDE_H - 0.31, w: 0.36, h: 0.12, align: 'right', fontFace: theme.fonts.body, fontSize: 7.2, bold: true, color: theme.colors.primary, margin: 0 });
+    return;
+  }
   slide.addShape('line', { x: MX.left, y: SLIDE_H - 0.52, w: SLIDE_W - MX.left - MX.right, h: 0, line: { color: theme.colors.border || 'DDE6F0', transparency: 10, width: 0.55 } });
   slide.addText(theme.style.footerText || '', { x: MX.left, y: SLIDE_H - 0.35, w: 6.75, h: 0.16, fontFace: theme.fonts.body, fontSize: 7.5, color: theme.colors.muted, margin: 0 });
   if (theme.brand?.footerLogo) addBrandMark(slide, theme, { placement: theme.brand.logoPlacement || 'footer_right', size: 0.46 });
@@ -78,9 +84,9 @@ function addEyebrow(slide, text, theme, opts = {}) {
 
 function addTitle(slide, title, theme, style, opts = {}) {
   if (opts.eyebrow) addEyebrow(slide, opts.eyebrow, theme, { x: opts.x ?? M.left, y: (opts.y ?? 0.56) - 0.28 });
-  slide.addText(title || '', { x: opts.x ?? M.left, y: opts.y ?? 0.56, w: opts.w ?? SLIDE_W - M.left - M.right, h: opts.h ?? 0.55, fontFace: theme.fonts.heading, fontSize: opts.fontSize ?? style.title, bold: true, color: opts.color ?? theme.colors.dark, margin: 0, breakLine: false, fit: 'shrink' });
+  slide.addText(title || '', { x: opts.x ?? M.left, y: opts.y ?? 0.48, w: opts.w ?? SLIDE_W - M.left - M.right, h: opts.h ?? 0.72, fontFace: theme.fonts.heading, fontSize: opts.fontSize ?? style.title, bold: true, color: opts.color ?? theme.colors.dark, margin: 0, breakLine: false, fit: 'shrink' });
   if (opts.rule !== false) {
-    slide.addShape('rect', { x: opts.x ?? M.left, y: (opts.y ?? 0.56) + (opts.h ?? 0.55) + 0.115, w: 0.74, h: 0.043, fill: { color: opts.ruleColor ?? theme.colors.accent }, line: { color: opts.ruleColor ?? theme.colors.accent, transparency: 100 } });
+    slide.addShape('rect', { x: opts.x ?? M.left, y: (opts.y ?? 0.48) + (opts.h ?? 0.72) + 0.1, w: 0.74, h: 0.043, fill: { color: opts.ruleColor ?? theme.colors.accent }, line: { color: opts.ruleColor ?? theme.colors.accent, transparency: 100 } });
   }
 }
 
@@ -93,13 +99,15 @@ function addBullets(slide, bullets = [], theme, style, opts = {}) {
   if (!Array.isArray(bullets) || bullets.length === 0) return;
   const prefix = opts.numbered ? null : '• ';
   const text = bullets.map((bullet, idx) => `${prefix || `${idx + 1}. `}${String(bullet)}`).join('\n');
-  slide.addText(text, { x: opts.x, y: opts.y, w: opts.w, h: opts.h, fontFace: theme.fonts.body, fontSize: opts.fontSize ?? style.bullet, color: opts.color ?? theme.colors.dark, fit: 'shrink', margin: opts.margin ?? 0.035, breakLine: false, paraSpaceAfterPt: opts.paraSpaceAfterPt ?? style.bulletGapPt, breakLine: false });
+  slide.addText(text, { x: opts.x, y: opts.y, w: opts.w, h: opts.h, fontFace: theme.fonts.body, fontSize: opts.fontSize ?? style.bullet, color: opts.color ?? theme.colors.dark, valign: opts.valign ?? 'top', fit: 'shrink', margin: opts.margin ?? 0.035, breakLine: false, paraSpaceAfterPt: opts.paraSpaceAfterPt ?? style.bulletGapPt, breakLine: false });
 }
 
 function addCard(slide, theme, opts = {}) {
   const fill = opts.fill || theme.colors.surface || theme.colors.white;
   const line = opts.line || theme.colors.border || 'DDE6F0';
-  slide.addShape('roundRect', { x: opts.x, y: opts.y, w: opts.w, h: opts.h, rectRadius: opts.rectRadius ?? theme.style.cornerRadius, fill: { color: fill, transparency: opts.transparency ?? 0 }, line: { color: line, transparency: opts.lineTransparency ?? 0, width: opts.lineWidth ?? 0.7 }, shadow: opts.shadow === false || theme.style.cardShadow === false ? undefined : { type: 'outer', color: 'C9D3DF', opacity: 0.13, blur: 1.1, angle: 45, distance: 1 } });
+  const radius = opts.rectRadius ?? theme.style.cornerRadius;
+  const shape = radius <= 0.03 ? 'rect' : 'roundRect';
+  slide.addShape(shape, { x: opts.x, y: opts.y, w: opts.w, h: opts.h, rectRadius: shape === 'roundRect' ? radius : undefined, fill: { color: fill, transparency: opts.transparency ?? 0 }, line: { color: line, transparency: opts.lineTransparency ?? 0, width: opts.lineWidth ?? 0.7 }, shadow: opts.shadow === false || theme.style.cardShadow === false ? undefined : { type: 'outer', color: 'C9D3DF', opacity: 0.13, blur: 1.1, angle: 45, distance: 1 } });
 }
 
 function addCardHeader(slide, text, theme, box, opts = {}) {
@@ -216,7 +224,8 @@ function addCaption(slide, caption, theme, box) {
 
 function addSpeakerNotes(slide, notes) {
   if (!notes) return;
-  const text = Array.isArray(notes) ? notes.join('\n') : String(notes);
+  const text = formatSpeakerNotes(notes);
+  if (!text) return;
   if (typeof slide.addNotes === 'function') slide.addNotes(text);
 }
 
@@ -236,7 +245,7 @@ function addTag(slide, text, theme, box, opts = {}) {
 function addStat(slide, theme, stat, box, opts = {}) {
   addCard(slide, theme, { ...box, fill: opts.fill || theme.colors.white, line: opts.line || theme.colors.border });
   slide.addText(String(stat.value || ''), { x: box.x + 0.22, y: box.y + 0.28, w: box.w - 0.44, h: 0.55, fontFace: theme.fonts.heading, fontSize: opts.valueSize || 27, bold: true, color: opts.color || theme.colors.primary, margin: 0, fit: 'shrink' });
-  slide.addText(String(stat.label || stat.title || ''), { x: box.x + 0.24, y: box.y + 0.95, w: box.w - 0.48, h: 0.48, fontFace: theme.fonts.body, fontSize: opts.labelSize || 11.2, color: theme.colors.dark, margin: 0, fit: 'shrink' });
+  slide.addText(String(stat.label || stat.title || ''), { x: box.x + 0.24, y: box.y + 0.95, w: box.w - 0.48, h: 0.48, fontFace: theme.fonts.body, fontSize: opts.labelSize || 14, color: theme.colors.dark, margin: 0, fit: 'shrink' });
   if (stat.note) slide.addText(String(stat.note), { x: box.x + 0.24, y: box.y + 1.42, w: box.w - 0.48, h: 0.32, fontFace: theme.fonts.body, fontSize: 8.4, color: theme.colors.muted, margin: 0, fit: 'shrink' });
 }
 

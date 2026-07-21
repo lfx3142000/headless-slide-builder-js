@@ -6,7 +6,7 @@ const { validateContent, validateTheme } = require('./validator');
 const { applyDesignPlan } = require('./designPlanner');
 const { applyDeckDesignPass } = require('./deckDesigner');
 const { analyzeSlideFit } = require('./fitChecker');
-const { resolveDeckImages, buildImageCatalog } = require('./imageCatalog');
+const { resolveDeckImages, buildImageCatalog, validateImageProvenance } = require('./imageCatalog');
 const { applyDeckTypeIntelligence } = require('./deckTypes');
 const { applyLayoutFallbacks } = require('./layoutFallbacks');
 const { applyTableFormatting } = require('./tableFormatter');
@@ -20,22 +20,25 @@ function logIssues(kind, issues) {
 
 function buildDeck(content, rawTheme, options = {}) {
   const theme = mergeTheme(rawTheme);
-  const imageCatalog = buildImageCatalog(theme);
+  const rootDir = options.rootDir || process.cwd();
+  const imageCatalog = buildImageCatalog(theme, { rootDir });
   if (imageCatalog.length) console.log(`Images available: ${imageCatalog.length} scanned from asset folders`);
-  const contentWithIds = ensureSlideIds(content);
-  const deckTypedContent = applyDeckTypeIntelligence(contentWithIds, theme);
-  const contentWithImages = resolveDeckImages(deckTypedContent, theme);
+  const deckTypedContent = applyDeckTypeIntelligence(content, theme);
+  const contentWithImages = resolveDeckImages(deckTypedContent, theme, { rootDir });
   const slidePlannedContent = applyDesignPlan(contentWithImages, theme, { design: !options.noDesign });
   const deckDesignedContent = applyDeckDesignPass(slidePlannedContent, theme, { deckDesign: !options.noDeckDesign, references: options.references !== false });
   const fallbackContent = applyLayoutFallbacks(deckDesignedContent, theme);
-  const plannedContent = applyTableFormatting(fallbackContent, theme);
+  const tableSafeContent = applyTableFormatting(fallbackContent, theme);
+  const plannedContent = ensureSlideIds(tableSafeContent);
   const themeValidation = validateTheme(rawTheme);
-  const contentValidation = validateContent(plannedContent);
+  const contentValidation = validateContent(plannedContent, { strictAssets: options.strictAssets, rootDir });
+  const provenanceValidation = validateImageProvenance(imageCatalog, { strictProvenance: options.strictProvenance });
   const fitWarnings = analyzeSlideFit(plannedContent);
   logIssues('Theme warnings', themeValidation.warnings);
   logIssues('Content warnings', contentValidation.warnings);
+  logIssues('Asset warnings', provenanceValidation.warnings);
   logIssues('Fit warnings', fitWarnings);
-  const errors = [...themeValidation.errors, ...contentValidation.errors];
+  const errors = [...themeValidation.errors, ...contentValidation.errors, ...provenanceValidation.errors];
   if (errors.length > 0) {
     logIssues('Errors', errors);
     throw new Error('Deck validation failed. Fix the errors above and rerun the builder.');
@@ -63,7 +66,7 @@ function buildDeck(content, rawTheme, options = {}) {
   if (theme.designerIntent) console.log(`Designer intent: ${theme.designerIntent}`);
   console.log('Formatting: automatic clean typography, spacing, layout fitting, theme-driven design variants, deck-wide rhythm planning, fallback layouts, and table auto-formatting');
   if (plannedContent._deckDesignPlan?.enabled) console.log(`Deck design pass: ${plannedContent._deckDesignPlan.visualRhythm}; references: ${plannedContent._deckDesignPlan.referenceCount || 0}`);
-  pptx._slideBuilder = { plannedContent, theme, fitWarnings, contentValidation, themeValidation };
+  pptx._slideBuilder = { plannedContent, theme, fitWarnings, contentValidation, themeValidation, provenanceValidation, imageCatalog };
   plannedContent.slides.forEach((slideData, index) => {
     const slideNumber = index + 1;
     const layoutFn = layouts[slideData.type];

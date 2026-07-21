@@ -1,58 +1,92 @@
 {
   "images": [
     {
+      "id": "premium-title-hero",
+      "path": "assets/images/premium-title-hero.png",
+      "tags": ["hero", "presentation", "data", "automation", "cover"],
+      "description": "Editorial title-slide visual of structured data becoming a presentation.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Premium editorial technology scene representing a presentation engine turning structured data into elegant slides; right-weighted composition, dark left negative space, no text."
+    },
+    {
+      "id": "premium-content-section",
+      "path": "assets/images/premium-content-section.png",
+      "tags": ["content", "layouts", "design", "section"],
+      "description": "Editorial presentation-layout still life.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Editorial still life of presentation layouts and typography specimens in a dark navy studio; objects right, no text."
+    },
+    {
+      "id": "premium-comparison-section",
+      "path": "assets/images/premium-comparison-section.png",
+      "tags": ["comparison", "decision", "section"],
+      "description": "Abstract cobalt panels representing comparison and alignment.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Premium abstract cobalt glass panels with a warm gold dividing line; objects right, no text."
+    },
+    {
+      "id": "premium-metrics-section",
+      "path": "assets/images/premium-metrics-section.png",
+      "tags": ["metrics", "data", "analytics", "section"],
+      "description": "Sculptural data landscape for metrics and analytics.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Sculptural luminous data landscape with elegant blue bars and a gold data point; objects right, no text."
+    },
+    {
+      "id": "premium-process-section",
+      "path": "assets/images/premium-process-section.png",
+      "tags": ["process", "workflow", "pipeline", "section"],
+      "description": "Editorial production-pipeline visual.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Illuminated cobalt modules linked by flowing lines toward a warm gold focal point; objects right, no text."
+    },
+    {
+      "id": "premium-closing-section",
+      "path": "assets/images/premium-closing-section.png",
+      "tags": ["closing", "quote", "decision", "section"],
+      "description": "Warm editorial conclusion visual with an open notebook and gold sculpture.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Premium dark studio still life with an open notebook and sculptural warm-gold form; objects right, no text."
+    },
+    {
+      "id": "premium-images-section",
+      "path": "assets/images/premium-images-section.png",
+      "tags": ["images", "gallery", "visuals", "section"],
+      "description": "Editorial gallery wall for image-layout section.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Elegant dark navy gallery wall of blue-and-gold photographic prints, right-weighted composition, no text."
+    },
+    {
       "id": "hero-workspace",
       "path": "assets/images/test-hero.png",
       "tags": ["hero", "workspace", "design", "professional", "cover"],
-      "description": "Wide clean studio workspace image suitable for title or full-bleed slides."
+      "description": "Wide clean studio workspace image suitable for title or full-bleed slides.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Premium blue-hour creative studio workspace, wide and crop-safe, with clear negative space for slide text."
     },
     {
       "id": "workspace",
       "path": "assets/images/test-workspace.png",
       "tags": ["workspace", "design", "desk", "planning", "creative"],
-      "description": "Neutral workspace and planning materials."
+      "description": "Neutral workspace and planning materials.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Refined creative workspace with notebook, pencil, swatches, plant, and abstract blue laptop display."
     },
     {
       "id": "data-flow",
       "path": "assets/images/test-data-flow.png",
       "tags": ["data", "flow", "ai", "technology", "automation", "digital"],
-      "description": "Futuristic AI data flow and dashboard image."
+      "description": "Futuristic AI data flow and dashboard image.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Abstract blue and amber data flow turning content into polished presentation cards, no text."
     },
     {
       "id": "meeting",
       "path": "assets/images/test-meeting.png",
       "tags": ["meeting", "executive", "presentation", "boardroom", "business"],
-      "description": "Professional boardroom meeting with presentation screens."
-    },
-    {
-      "id": "corporate-interior",
-      "path": "assets/images/corporate-interior.png",
-      "tags": ["corporate", "interior", "office", "professional", "section"],
-      "description": "Modern corporate office interior with abstract blue overlay."
-    },
-    {
-      "id": "studio-workspace",
-      "path": "assets/images/studio-workspace.png",
-      "tags": ["studio", "workspace", "creative", "design"],
-      "description": "Studio workspace environment."
-    },
-    {
-      "id": "meeting-room",
-      "path": "assets/images/meeting-room.png",
-      "tags": ["meeting", "room", "office", "collaboration"],
-      "description": "Modern meeting room setup."
-    },
-    {
-      "id": "data-flow-alt",
-      "path": "assets/images/data-flow.png",
-      "tags": ["data", "flow", "technology", "digital"],
-      "description": "Data flow visualization."
-    },
-    {
-      "id": "example",
-      "path": "assets/images/example.png",
-      "tags": ["example", "demo", "sample"],
-      "description": "Example placeholder image."
+      "description": "Professional boardroom meeting with presentation screens.",
+      "source": "Generated with Codex built-in image generation on 2026-06-24.",
+      "prompt": "Professional collaborative boardroom workshop with abstract presentation screen and no readable text."
     }
   ]
 }

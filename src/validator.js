@@ -51,15 +51,22 @@ function looksLikeExplicitPath(value) {
   return typeof value === 'string' && /\.(png|jpe?g|webp|gif)$/i.test(value);
 }
 
-function pathExistsMaybe(relPath) {
+function pathExistsMaybe(relPath, rootDir = process.cwd()) {
   if (!relPath || !looksLikeExplicitPath(relPath)) return true;
-  const abs = path.isAbsolute(relPath) ? relPath : path.resolve(process.cwd(), relPath);
+  const abs = path.isAbsolute(relPath) ? relPath : path.resolve(rootDir, relPath);
   return fs.existsSync(abs);
 }
 
-function validateContent(content) {
+function addAssetIssue(errors, warnings, message, strictAssets) {
+  if (strictAssets) errors.push(message);
+  else warnings.push(`${message}. A placeholder will be rendered.`);
+}
+
+function validateContent(content, options = {}) {
   const errors = [];
   const warnings = [];
+  const strictAssets = options.strictAssets === true;
+  const rootDir = options.rootDir || process.cwd();
 
   if (!content || typeof content !== 'object') {
     errors.push('content.json must contain a JSON object.');
@@ -107,12 +114,18 @@ function validateContent(content) {
     if (slide.type === 'risk_matrix' && Array.isArray(slide.items) && slide.items.length > 12) warnings.push(`${label} has more risk items than the current layout is optimized for.`);
 
     const imagePathCandidate = getImagePathCandidate(slide.image);
-    if (imagePathCandidate && !pathExistsMaybe(imagePathCandidate)) warnings.push(`${label} image path not found: ${imagePathCandidate}. A placeholder will be rendered.`);
+    if (imagePathCandidate && !pathExistsMaybe(imagePathCandidate, rootDir)) {
+      addAssetIssue(errors, warnings, `${label} image path not found: ${imagePathCandidate}`, strictAssets);
+    } else if (slide.imageUnresolved) {
+      addAssetIssue(errors, warnings, `${label} image could not be resolved: ${slide.imageUnresolved}`, strictAssets);
+    }
 
     if (Array.isArray(slide.images)) {
       slide.images.forEach((img, i) => {
         const imgPath = getImagePathCandidate(img);
-        if (imgPath && !pathExistsMaybe(imgPath)) warnings.push(`${label} image ${i + 1} path not found: ${imgPath}. A placeholder will be rendered.`);
+        if (imgPath && !pathExistsMaybe(imgPath, rootDir)) {
+          addAssetIssue(errors, warnings, `${label} image ${i + 1} path not found: ${imgPath}`, strictAssets);
+        }
       });
     }
   });
