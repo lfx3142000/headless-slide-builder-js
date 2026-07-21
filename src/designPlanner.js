@@ -1,4 +1,5 @@
 function cloneJson(value) { return JSON.parse(JSON.stringify(value || {})); }
+const { hasSpeakerNotes, synthesizeSpeakerNotes } = require('./speakerNotes');
 function count(items) { return Array.isArray(items) ? items.length : 0; }
 function textLen(value) {
   if (!value) return 0;
@@ -52,7 +53,8 @@ function applyDesignPlan(content, theme, options = {}) {
     enabled,
     mode: intelligence.mode || 'safe',
     generatedBy: 'src/designPlanner.js',
-    note: 'Deterministic planning only: no content rewriting, no slide splitting, no external AI calls.'
+    note: 'Deterministic planning only: no content rewriting, no slide splitting, no external AI calls.',
+    speakerNotesSynthesized: 0
   };
   if (!enabled || !Array.isArray(planned.slides)) return planned;
   planned.slides = planned.slides.map((slide, idx) => {
@@ -69,6 +71,10 @@ function applyDesignPlan(content, theme, options = {}) {
     next.design.visualWeight = next.design.visualWeight || (next.image || next.images ? 'visual' : bullets <= 3 && chars < 350 ? 'high' : 'balanced');
     next.design.fitStrategy = next.design.fitStrategy || (chars > 750 || bullets > 7 ? 'shrink_and_warn' : 'standard');
     next.design.slideIndex = idx + 1;
+    if (intelligence.speakerNotes !== false && !hasSpeakerNotes(next.speakerNotes)) {
+      next.speakerNotes = synthesizeSpeakerNotes(next, idx, planned);
+      planned._designProcessing.speakerNotesSynthesized += 1;
+    }
     return next;
   });
   return planned;

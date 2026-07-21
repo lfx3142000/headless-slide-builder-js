@@ -12,13 +12,16 @@
       "type": "title",
       "eyebrow": "Headless JS Slide Builder v10",
       "title": "Full Feature Demo",
-      "subtitle": "Showcasing every slide layout: titles, content, metrics, charts, timelines, tables, quotes, and more."
+      "subtitle": "Showcasing every slide layout: titles, content, metrics, charts, timelines, tables, quotes, and more.",
+      "image": "assets/images/premium-title-hero.png",
+      "variant": "full_bleed"
     },
     {
       "type": "section",
       "eyebrow": "Part 1",
       "title": "Content & Bullet Layouts",
-      "subtitle": "Standard slides with text, bullets, and key messages"
+      "subtitle": "Standard slides with text, bullets, and key messages",
+      "image": "assets/images/premium-content-section.png"
     },
     {
       "type": "content",
@@ -73,7 +76,8 @@
       "type": "section",
       "eyebrow": "Part 2",
       "title": "Two-Column & Comparison",
-      "subtitle": "Side-by-side layouts for structured comparison"
+      "subtitle": "Side-by-side layouts for structured comparison",
+      "image": "assets/images/premium-comparison-section.png"
     },
     {
       "type": "two_column",
@@ -116,7 +120,8 @@
       "type": "section",
       "eyebrow": "Part 3",
       "title": "Metrics & Data Slides",
-      "subtitle": "Numbers, charts, and risk visualization"
+      "subtitle": "Numbers, charts, and risk visualization",
+      "image": "assets/images/premium-metrics-section.png"
     },
     {
       "type": "big_number",
@@ -180,7 +185,8 @@
       "type": "section",
       "eyebrow": "Part 4",
       "title": "Process, Timeline & Tables",
-      "subtitle": "Structured data and workflow visualization"
+      "subtitle": "Structured data and workflow visualization",
+      "image": "assets/images/premium-process-section.png"
     },
     {
       "type": "process",
@@ -233,7 +239,8 @@
       "type": "section",
       "eyebrow": "Part 5",
       "title": "Quotes & Closing",
-      "subtitle": "Testimonial and call-to-action slides"
+      "subtitle": "Testimonial and call-to-action slides",
+      "image": "assets/images/premium-closing-section.png"
     },
     {
       "type": "quote",
@@ -248,7 +255,7 @@
       "bullets": [
         "Clone the repo and run npm install",
         "Edit input/content.json with your content",
-        "Run npm run build:demo to generate your deck",
+        "Run npm run build:demo-package to generate your deck bundle",
         "Review contact_sheet.pdf for a quick visual check"
       ]
     },
@@ -256,7 +263,8 @@
       "type": "section",
       "eyebrow": "Part 6",
       "title": "Image Layouts",
-      "subtitle": "Slides with photos and visual content"
+      "subtitle": "Slides with photos and visual content",
+      "image": "assets/images/premium-images-section.png"
     },
     {
       "type": "image_left",

@@ -24,6 +24,12 @@ Build the full-feature PowerPoint demo:
 npm run build:demo
 ```
 
+Build the current strict editorial demo package:
+
+```bash
+npm run build:demo-package
+```
+
 Validate demo inputs without generating a deck:
 
 ```bash
@@ -48,6 +54,8 @@ node src/index.js \
 
 The demo content currently produces a 28-slide, full-feature layout showcase. It includes title, section, content, comparison, metric, chart, process, timeline, paginated table, image, quote, closing, and reference slides. The large table is split into a continuation slide so no rows are dropped.
 
+`npm run build:demo-package` uses the same inputs with strict asset/provenance validation and writes the current polished output to `output/visual-demo-editorial/`, plus the contact sheet under `output/pdf/`.
+
 ## Generated Artifacts
 
 | Path | Purpose |
@@ -62,6 +70,17 @@ The demo content currently produces a 28-slide, full-feature layout showcase. It
 | `output/visual_self_review_prompt.md` | Structured prompt for a manual AI visual review. |
 | `output/preview/` | Slide PNGs when render dependencies are available. |
 | `output/contact_sheet.pdf` | One-page slide grid when render dependencies are available. |
+
+## Editorial Demo Package Artifacts
+
+| Path | Purpose |
+|---|---|
+| `output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx` | Current strict editorial demo deck. |
+| `output/visual-demo-editorial/planned_content.json` | Planned content including synthesized speaker notes and resolved images. |
+| `output/visual-demo-editorial/speaker_notes.md` | Exported speaker notes; synthesized notes are marked for review. |
+| `output/visual-demo-editorial/quality_report.md` | Latest quality checks; current verified build reports 100/100. |
+| `output/visual-demo-editorial/preview-final/` | Rendered slide PNGs for visual QA. |
+| `output/pdf/headless-slide-builder-editorial-contact-sheet.pdf` | One-page PDF contact sheet for the editorial demo. |
 
 ## Prebuilt Demo Artifacts
 
@@ -79,7 +98,7 @@ If any of those tools are unavailable, the builder reports that preview renderin
 
 ## Image Behavior
 
-Image slides reference paths under `assets/images/`. The four assets used by the full demo are present and record their Codex image-generation prompts in `assets/images/images.json`; the demo passes strict asset and provenance validation without placeholders.
+Image slides reference paths under `assets/images/`. The demo assets are present and record their Codex image-generation prompts in `assets/images/images.json`; the editorial demo passes strict asset and provenance validation without placeholders.
 
 GitHub Actions still downloads temporary sample images before building its demo run. Production decks should use their own approved assets and record source or prompt provenance in the image manifest.
 

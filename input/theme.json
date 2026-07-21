@@ -18,12 +18,15 @@
     "body": "Aptos"
   },
   "style": {
-    "cornerRadius": 0.16,
+    "cornerRadius": 0.02,
     "useFooter": true,
     "footerText": "Headless Slide Builder Demo",
     "titleScale": 1,
     "bodyScale": 1,
-    "cardShadow": true,
-    "accentBar": true
+    "cardShadow": false,
+    "accentBar": false,
+    "visualLanguage": "editorial",
+    "backdropStyle": "none",
+    "footerStyle": "page_only"
   }
 }

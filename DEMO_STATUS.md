@@ -2,7 +2,7 @@
 
 ## Current Status
 
-**Working - verified 2026-06-23.** The previously reported `src/layouts.js` syntax error is no longer present. The complete builder and its supporting modules are in the repository, and the full-feature demo builds successfully.
+**Working - verified 2026-07-21.** The previously reported `src/layouts.js` syntax error is no longer present. The complete builder and its supporting modules are in the repository, and the editorial full-feature demo builds successfully.
 
 The verified build produced a 28-slide PowerPoint deck and these supporting artifacts:
 
@@ -16,16 +16,18 @@ The verified build produced a 28-slide PowerPoint deck and these supporting arti
 
 The table reference that previously warned about dropped rows now renders as two continuation slides. The final contact sheet was visually inspected after rendering.
 
+The latest generated quality report scores 100/100, with 0 slides missing speaker notes, 0 missing image assets, and 0 layout fallback events. Speaker notes are deterministically synthesized from existing slide content when source-authored notes are absent.
+
 The repository also includes an earlier pre-rendered demo deck, slide PNGs, and a one-page contact sheet in `demo-outputs/`.
 
 ## Verified Build Command
 
 ```bash
 npm install
-npm run build:demo
+npm run build:demo-package
 ```
 
-`npm run build:demo` runs `src/index.js` with the demo content and theme and writes the deck to `output/generated_deck.pptx`.
+`npm run build:demo-package` runs `src/index.js` with the demo content and theme, strict asset/provenance checks, preview rendering, and contact-sheet output. It writes the current editorial deck to `output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx`.
 
 Build a self-contained deck package with automatic reports:
 
@@ -55,10 +57,10 @@ Preview rendering requires all of the following on `PATH`:
 
 If those dependencies are unavailable, deck generation still succeeds but preview and contact-sheet generation are skipped. Set `SOFFICE_PATH`, `PDFTOPPM_PATH`, and `PYTHON_PATH` to explicit executable paths when tools are installed outside `PATH`. GitHub Actions installs them for the demo workflow.
 
-### Content-quality warnings in the current full demo
+### Content-quality notes in the current full demo
 
 - The four image-layout slides use generated, crop-safe visuals and were visually reviewed after rendering.
-- Most demo slides do not contain speaker notes.
+- Demo slides now contain either authored or deterministic speaker notes. Auto-generated notes are marked for human review before live delivery.
 - Placeholder image rendering is allowed in normal mode; strict missing-asset failure is available with `--strict-assets`.
 
 ## GitHub Actions
@@ -77,8 +79,8 @@ The workflow uses `npm ci`, read-only repository permissions, and artifact-first
 ## Next Code Work
 
 1. Test the builder with real health-physics training content.
-2. Replace or remove unused legacy image-manifest entries so the manifest contains only approved assets.
-3. Verify editing behavior in Microsoft PowerPoint with representative course decks.
-4. Add instructor-led and online delivery variants where the course content requires them.
+2. Verify editing behavior in Microsoft PowerPoint with representative course decks.
+3. Add instructor-led and online delivery variants where the course content requires them.
+4. Add a stronger automated visual-review rubric for image crop, spacing, and hierarchy beyond the current deterministic checks.
 
 See `TASKS.md` for the source-of-truth backlog and `DEMO_OUTPUT.md` for the current build outputs.

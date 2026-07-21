@@ -6,6 +6,8 @@ const test = require('node:test');
 const { validateContent } = require('../src/validator');
 const { scoreDeck } = require('../src/qualityReporter');
 const { validateImageProvenance } = require('../src/imageCatalog');
+const { applyDesignPlan } = require('../src/designPlanner');
+const { formatSpeakerNotes } = require('../src/speakerNotes');
 
 test('strict assets turn missing image paths into validation errors', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'slide-builder-assets-'));
@@ -44,4 +46,20 @@ test('strict provenance requires a source or generation prompt', () => {
 
   assert.equal(permissive.warnings.length, 1);
   assert.equal(strict.errors.length, 1);
+});
+
+test('design planning synthesizes speaker notes from existing slide content', () => {
+  const planned = applyDesignPlan({
+    deckTitle: 'Notes Test',
+    slides: [
+      { type: 'title', title: 'Notes Test', subtitle: 'Demo' },
+      { type: 'content', title: 'Key Ideas', bullets: ['First idea', 'Second idea'] },
+      { type: 'closing', title: 'Next Steps', speakerNotes: 'Keep this authored note.' }
+    ]
+  }, { designIntelligence: { enabled: true } });
+
+  assert.equal(planned._designProcessing.speakerNotesSynthesized, 2);
+  assert.match(formatSpeakerNotes(planned.slides[1].speakerNotes), /First idea/);
+  assert.equal(planned.slides[2].speakerNotes, 'Keep this authored note.');
+  assert.equal(scoreDeck(planned).slidesWithoutNotes, 0);
 });

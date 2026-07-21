@@ -9,6 +9,7 @@
     "test": "node --test",
     "validate": "node src/index.js --validate-only",
     "build:demo": "node src/index.js --content input/content.json --theme input/theme.json --out output/generated_deck.pptx --plan-out output/planned_content.json --notes output/speaker_notes.md --image-catalog output/image_catalog.json --preview output/preview --contact-sheet output/contact_sheet.pdf",
+    "build:demo-package": "node src/index.js --content input/content.json --theme input/theme.json --out output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx --plan-out output/visual-demo-editorial/planned_content.json --notes output/visual-demo-editorial/speaker_notes.md --image-catalog output/visual-demo-editorial/image_catalog.json --preview output/visual-demo-editorial/preview-final --contact-sheet output/pdf/headless-slide-builder-editorial-contact-sheet.pdf --strict-assets --strict-provenance",
     "notes": "node src/index.js --validate-only --notes output/speaker_notes.md",
     "build:no-design": "node src/index.js --no-design",
     "image-catalog": "node src/index.js --validate-only --image-catalog output/image_catalog.json",

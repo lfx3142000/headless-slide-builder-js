@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { analyzeSlideFit } = require('./fitChecker');
+const { hasSpeakerNotes } = require('./speakerNotes');
 
 function countBy(items, keyFn) {
   return items.reduce((acc, item) => {
@@ -16,7 +17,7 @@ function scoreDeck(content, fitWarnings = []) {
   const issues = [];
   const layoutCounts = countBy(slides, (s) => s.type);
   const dominant = Object.entries(layoutCounts).sort((a,b)=>b[1]-a[1])[0];
-  const slidesWithoutNotes = slides.filter((s) => !s.speakerNotes || (Array.isArray(s.speakerNotes) && s.speakerNotes.length === 0)).length;
+  const slidesWithoutNotes = slides.filter((s) => !hasSpeakerNotes(s.speakerNotes)).length;
   const unresolvedImageSlides = slides
     .map((slide, index) => ({ slide, index }))
     .filter(({ slide }) => slide.imageUnresolved || slide.imagesUnresolved?.length || (slide.type || '').includes('image') && !slide.image && !slide.images);
@@ -57,6 +58,7 @@ function generateQualityReport(content, theme, context = {}) {
   lines.push('');
   lines.push(`## Checks`);
   lines.push(`- Slides missing speaker notes: ${scoring.slidesWithoutNotes}`);
+  lines.push(`- Speaker notes synthesized: ${content._designProcessing?.speakerNotesSynthesized || 0}`);
   lines.push(`- Image layout slides missing assets: ${scoring.imageIssues}`);
   lines.push(`- Layout fallback events: ${content._layoutFallbacks?.count || 0}`);
   lines.push(`- Table formatting entries: ${content._tableFormatting?.tables?.length || 0}`);

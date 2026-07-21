@@ -4,7 +4,7 @@ Headless PowerPoint generation with Node.js and PptxGenJS. The builder takes str
 
 ## Current Status
 
-The core builder is working. On 2026-06-23, the full-feature demo built successfully as a 28-slide PowerPoint deck with planned-content, speaker-notes, quality, reference, and visual-review reports. The table reference slide is now split across two slides so no rows are discarded.
+The core builder is working. On 2026-07-21, the editorial full-feature demo built successfully as a 28-slide PowerPoint deck with planned-content, speaker-notes, quality, reference, image-catalog, preview, and contact-sheet artifacts. The table reference slide is split across two slides so no rows are discarded, and deterministic speaker-note synthesis now removes the prior missing-notes quality warning.
 
 The code-only reliability work is in place: deck-specific input packaging, strict asset/provenance validation switches, configurable preview/contact-sheet generation, table pagination, GitHub Actions artifact delivery, and Node-native tests. AI APIs are not part of the current implementation scope; content drafting and visual review may be done manually with an AI tool outside the codebase.
 
@@ -15,7 +15,7 @@ The code-only reliability work is in place: deck-specific input packaging, stric
 - Validates content and theme JSON, reports fit warnings, and exports planned content.
 - Supports `--strict-assets` and `--strict-provenance` for production-oriented validation.
 - Splits oversized table and compliance-matrix data across continuation slides instead of dropping rows.
-- Exports speaker notes, quality, reference, deck-summary, and visual-review reports.
+- Exports authored or deterministically synthesized speaker notes, quality, reference, deck-summary, and visual-review reports.
 - Renders slide PNGs and a one-page contact sheet when LibreOffice, Poppler, and Pillow are available.
 
 ## Requirements
@@ -48,6 +48,14 @@ The full demo reads `input/content.json` and `input/theme.json` and writes artif
 - `preview/` and `contact_sheet.pdf` when preview dependencies are available
 
 `node demo.js` is a lightweight console demonstration only; it does not create a PowerPoint file.
+
+For the current strict editorial demo package, use:
+
+```bash
+npm run build:demo-package
+```
+
+This writes the PPTX, planned content, speaker notes, image catalog, rendered preview slides, and one-page contact sheet under `output/visual-demo-editorial/` and `output/pdf/`.
 
 ## Build with Custom Inputs
 
@@ -84,7 +92,7 @@ See [`decks/README.md`](decks/README.md) for the package layout.
 - `theme.json` contains colors, fonts, layout preferences, and asset configuration.
 - Image slides reference files under `assets/images/`; `assets/images/images.json` describes the available images.
 
-The four image assets used by the full-feature demo are now present under `assets/images/` and record their generation prompts in `assets/images/images.json`. The demo passes both `--strict-assets` and `--strict-provenance`. Some unused legacy manifest entries still do not have matching files; production decks should provide only approved, attributable assets for the slides they use.
+The demo image assets are present under `assets/images/` and record their generation prompts in `assets/images/images.json`. The editorial demo passes both `--strict-assets` and `--strict-provenance`. Production decks should provide only approved, attributable assets for the slides they use.
 
 ## Review Loop
 
