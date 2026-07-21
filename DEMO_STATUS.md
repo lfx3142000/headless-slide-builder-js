@@ -16,7 +16,7 @@ The verified build produced a 28-slide PowerPoint deck and these supporting arti
 
 The table reference that previously warned about dropped rows now renders as two continuation slides. The final contact sheet was visually inspected after rendering.
 
-The latest generated quality report scores 100/100, with 0 slides missing speaker notes, 0 missing image assets, and 0 layout fallback events. Speaker notes are deterministically synthesized from existing slide content when source-authored notes are absent.
+The latest generated quality report scores 100/100, with a visual-QA score of 94/100, 0 slides missing speaker notes, 0 missing image assets, and 0 layout fallback events. Speaker notes are deterministically synthesized from existing slide content when source-authored notes are absent.
 
 The repository also includes an earlier pre-rendered demo deck, slide PNGs, and a one-page contact sheet in `demo-outputs/`.
 
@@ -81,6 +81,6 @@ The workflow uses `npm ci`, read-only repository permissions, and artifact-first
 1. Test the builder with real health-physics training content.
 2. Verify editing behavior in Microsoft PowerPoint with representative course decks.
 3. Add instructor-led and online delivery variants where the course content requires them.
-4. Add a stronger automated visual-review rubric for image crop, spacing, and hierarchy beyond the current deterministic checks.
+4. Extend the visual-QA rubric with rendered-slide measurements for crop, spacing, and hierarchy once the renderer is available in all target environments.
 
 See `TASKS.md` for the source-of-truth backlog and `DEMO_OUTPUT.md` for the current build outputs.

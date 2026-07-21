@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { analyzeSlideFit } = require('./fitChecker');
 const { hasSpeakerNotes } = require('./speakerNotes');
+const { analyzeVisualQuality } = require('./visualQa');
 
 function countBy(items, keyFn) {
   return items.reduce((acc, item) => {
@@ -43,6 +44,7 @@ function scoreDeck(content, fitWarnings = []) {
 function generateQualityReport(content, theme, context = {}) {
   const fitWarnings = context.fitWarnings || analyzeSlideFit(content);
   const scoring = scoreDeck(content, fitWarnings);
+  const visualQa = analyzeVisualQuality(content, theme);
   const lines = [];
   lines.push(`# Slide Builder Quality Report`);
   lines.push('');
@@ -51,6 +53,7 @@ function generateQualityReport(content, theme, context = {}) {
   lines.push(`Deck type: ${content.deckType || 'not specified'}`);
   lines.push(`Slides: ${(content.slides || []).length}`);
   lines.push(`Quality score: ${scoring.score}/100`);
+  lines.push(`Visual QA score: ${visualQa.score}/100`);
   lines.push(`Design tokens: ${JSON.stringify(theme.designTokens || {})}`);
   lines.push('');
   lines.push(`## Layout Mix`);
@@ -62,6 +65,23 @@ function generateQualityReport(content, theme, context = {}) {
   lines.push(`- Image layout slides missing assets: ${scoring.imageIssues}`);
   lines.push(`- Layout fallback events: ${content._layoutFallbacks?.count || 0}`);
   lines.push(`- Table formatting entries: ${content._tableFormatting?.tables?.length || 0}`);
+  lines.push(`- Visual ratio: ${visualQa.visualRatio}`);
+  lines.push('');
+  lines.push(`## Visual QA Rubric`);
+  lines.push(`- Long titles: ${visualQa.checks.longTitles}`);
+  lines.push(`- Text-heavy slides: ${visualQa.checks.textHeavySlides}`);
+  lines.push(`- Text-only runs: ${visualQa.checks.textOnlyRuns}`);
+  lines.push(`- Repeated image uses: ${visualQa.checks.repeatedImageUses}`);
+  lines.push(`- Divider/title slides missing editorial visuals: ${visualQa.checks.missingDividerVisuals}`);
+  lines.push(`- Slides with visual support: ${visualQa.checks.slidesWithVisuals}`);
+  if (visualQa.strengths.length) {
+    lines.push('');
+    visualQa.strengths.forEach((strength) => lines.push(`- ${strength}`));
+  }
+  if (visualQa.issues.length) {
+    lines.push('');
+    visualQa.issues.forEach((issue) => lines.push(`- ${issue}`));
+  }
   lines.push('');
   if (content._deckTypePlan) {
     lines.push(`## Deck-Type Guidance`);
@@ -87,6 +107,7 @@ function generateQualityReport(content, theme, context = {}) {
   lines.push(`## Issues and Recommendations`);
   if (!scoring.issues.length) lines.push('- No major issues detected.');
   scoring.issues.forEach((issue) => lines.push(`- ${issue}`));
+  visualQa.issues.forEach((issue) => lines.push(`- Visual QA: ${issue}`));
   lines.push('');
   lines.push(`## Slide IDs`);
   (content.slides || []).forEach((s, i) => lines.push(`- ${i + 1}. ${s.id || '(no id)'} — ${s.title || s.type}`));

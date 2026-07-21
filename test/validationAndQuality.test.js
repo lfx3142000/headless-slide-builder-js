@@ -8,6 +8,7 @@ const { scoreDeck } = require('../src/qualityReporter');
 const { validateImageProvenance } = require('../src/imageCatalog');
 const { applyDesignPlan } = require('../src/designPlanner');
 const { formatSpeakerNotes } = require('../src/speakerNotes');
+const { analyzeVisualQuality } = require('../src/visualQa');
 
 test('strict assets turn missing image paths into validation errors', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'slide-builder-assets-'));
@@ -62,4 +63,34 @@ test('design planning synthesizes speaker notes from existing slide content', ()
   assert.match(formatSpeakerNotes(planned.slides[1].speakerNotes), /First idea/);
   assert.equal(planned.slides[2].speakerNotes, 'Keep this authored note.');
   assert.equal(scoreDeck(planned).slidesWithoutNotes, 0);
+});
+
+test('visual QA flags weak rhythm and repeated image use', () => {
+  const qa = analyzeVisualQuality({
+    slides: [
+      { type: 'title', title: 'Demo', image: 'assets/hero.png' },
+      { type: 'content', title: 'One', bullets: ['A'] },
+      { type: 'content', title: 'Two', bullets: ['B'] },
+      { type: 'content', title: 'Three', bullets: ['C'] },
+      { type: 'image_left', title: 'Visual A', image: { path: 'assets/reused.png' } },
+      { type: 'image_right', title: 'Visual B', image: 'assets/reused.png' }
+    ]
+  }, { designTokens: { imageStyle: 'editorial' } });
+
+  assert.equal(qa.checks.textOnlyRuns, 1);
+  assert.equal(qa.checks.repeatedImageUses, 1);
+  assert.ok(qa.score < 100);
+  assert.match(qa.issues.join('\n'), /text-only slides/);
+});
+
+test('visual QA ignores intentional image-grid gallery reuse', () => {
+  const qa = analyzeVisualQuality({
+    slides: [
+      { type: 'title', title: 'Demo', image: 'assets/hero.png' },
+      { type: 'image_left', title: 'Visual A', image: 'assets/reused.png' },
+      { type: 'image_grid', title: 'Gallery', images: ['assets/reused.png', 'assets/hero.png'] }
+    ]
+  }, { designTokens: { imageStyle: 'editorial' } });
+
+  assert.equal(qa.checks.repeatedImageUses, 0);
 });

@@ -64,7 +64,7 @@ The demo content currently produces a 28-slide, full-feature layout showcase. It
 | `output/planned_content.json` | Content after IDs, design rules, image resolution, fallbacks, and table formatting. |
 | `output/speaker_notes.md` | Exported speaker notes. |
 | `output/image_catalog.json` | Image manifest and local-asset scan. |
-| `output/quality_report.md` | Build warnings, layout mix, and quality checks. |
+| `output/quality_report.md` | Build warnings, layout mix, quality checks, and deterministic visual-QA rubric. |
 | `output/deck_summary.md` | Deck-level design and layout summary. |
 | `output/references.md` | Collected deck references. |
 | `output/visual_self_review_prompt.md` | Structured prompt for a manual AI visual review. |
@@ -78,7 +78,7 @@ The demo content currently produces a 28-slide, full-feature layout showcase. It
 | `output/visual-demo-editorial/headless-slide-builder-editorial-demo.pptx` | Current strict editorial demo deck. |
 | `output/visual-demo-editorial/planned_content.json` | Planned content including synthesized speaker notes and resolved images. |
 | `output/visual-demo-editorial/speaker_notes.md` | Exported speaker notes; synthesized notes are marked for review. |
-| `output/visual-demo-editorial/quality_report.md` | Latest quality checks; current verified build reports 100/100. |
+| `output/visual-demo-editorial/quality_report.md` | Latest quality and visual-QA checks; current verified build reports quality 100/100 and visual QA 94/100. |
 | `output/visual-demo-editorial/preview-final/` | Rendered slide PNGs for visual QA. |
 | `output/pdf/headless-slide-builder-editorial-contact-sheet.pdf` | One-page PDF contact sheet for the editorial demo. |
 

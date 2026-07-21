@@ -12,10 +12,10 @@ The code-only reliability work is in place: deck-specific input packaging, stric
 
 - Generates title, section, content, comparison, metric, chart, process, timeline, table, image, quote, closing, and reference slides.
 - Applies theme colors, fonts, layout variants, and deck-level visual rhythm.
-- Validates content and theme JSON, reports fit warnings, and exports planned content.
+- Validates content and theme JSON, reports fit and visual-QA warnings, and exports planned content.
 - Supports `--strict-assets` and `--strict-provenance` for production-oriented validation.
 - Splits oversized table and compliance-matrix data across continuation slides instead of dropping rows.
-- Exports authored or deterministically synthesized speaker notes, quality, reference, deck-summary, and visual-review reports.
+- Exports authored or deterministically synthesized speaker notes, quality, visual-QA, reference, deck-summary, and visual-review reports.
 - Renders slide PNGs and a one-page contact sheet when LibreOffice, Poppler, and Pillow are available.
 
 ## Requirements
@@ -101,6 +101,8 @@ The demo image assets are present under `assets/images/` and record their genera
 3. Inspect the generated deck and contact sheet.
 4. Use `visual_self_review_prompt.md` for a manual AI design review if desired.
 5. Apply approved content, theme, asset, or layout edits and rebuild.
+
+The generated quality report now includes a deterministic visual-QA rubric for long titles, text-heavy slides, text-only slide runs, repeated images, divider visual coverage, and overall visual ratio. It does not replace full visual inspection, but it catches common “this feels less professional than it should” problems before review.
 
 ## Project Structure
 
