@@ -63,6 +63,7 @@ jobs:
         with:
           name: demo-presentation
           path: output/
+              retention-days: 1
 
       - name: Commit outputs to repository
         run: |
